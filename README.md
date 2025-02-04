@@ -1,58 +1,5 @@
 # [switchbot](https://github.com/n138-kz/switchbot)
 
-## Quick setup
-
-<details>
-
-### if you’ve done this kind of thing before
-
-```sh
-git clone https://github.com/n138-kz/switchbot.git
-```
-
-```sh
-git clone git@github.com:n138-kz/switchbot.git
-```
-
-### …or create a new repository on the command line
-
-```sh
-touch README.md
-git init
-git add README.md
-git commit -m init
-git branch -M main
-git remote add origin git@github.com:n138-kz/switchbot.git
-git branch --set-upstream-to=origin/main main
-git config pull.rebase false
-git fetch
-git pull
-git merge --allow-unrelated-histories origin/main
-git push -u origin main
-```
-
-- [git merge --allow-unrelated-histories origin/main](https://qiita.com/mei28/items/85bc881ac1f26332ac15)
-
-### …or push an existing repository from the command line
-
-```sh
-git remote add origin git@github.com:n138-kz/switchbot.git
-git branch -M main
-git push -u origin main
-```
-
-### pull an another existing repository from the command line
-
-```sh
-git config pull.rebase false
-git branch -r
-git pull origin {remote-repos-name}:{local-repos-name}
-git checkout {local-repos-name}
-git branch --set-upstream-to=origin/{remote-repos-name} {local-repos-name}
-```
-
-</details>
-
 ## Activity
 
 [![GitHub repo license](https://img.shields.io/github/license/n138-kz/switchbot)](/LICENSE)
