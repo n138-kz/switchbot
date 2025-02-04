@@ -37,4 +37,4 @@ jobs:
         echo "{\"external\":{\"switchbot\":{\"credential\":{\"client_token\":\"${{secrets.switchbot_client_token}}\",\"client_secret\":\"${{secrets.switchbot_client_secret}}\"}}}}" | tee .secret/config.json
 
     - name: Run php
-      run: for i in *.php; do php ${i} | jq; done
+      run: for i in *.php; do echo ${i}; php ${i} | jq; done
