@@ -1,5 +1,5 @@
 <?php
-$config=file_get_contents(__DIR__.'/.secret/config.json');
+$config=json_decode(file_get_contents(__DIR__.'/.secret/config.json'), TRUE);
 $token = $config['external']['switchbot']['credential']['client_token'];
 $secret = $config['external']['switchbot']['credential']['client_secret'];
 $nonce = guidv4();
