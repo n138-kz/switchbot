@@ -41,4 +41,4 @@ jobs:
 
     - name: Send discord
       run: |
-        for i in github-action-run*; do curl -X POST -H 'Content-Type:multipart/form-data' -F 'file=@'${i} -F 'content=Launched github action: n138-kz/switchbot.\nRepository: https://github.com/n138-kz/switchbot/' ${{secrets.discord_webhook_url}}; done
+        for i in github-action-run*; do curl -X POST -H 'Content-Type:multipart/form-data' -F 'file=@'${i} -F 'content=Launched github action: n138-kz/switchbot.'"\n"'Repository: https://github.com/n138-kz/switchbot/' ${{secrets.discord_webhook_url}}; done
