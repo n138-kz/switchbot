@@ -37,4 +37,8 @@ jobs:
         echo "{\"external\":{\"switchbot\":{\"credential\":{\"client_token\":\"${{secrets.switchbot_client_token}}\",\"client_secret\":\"${{secrets.switchbot_client_secret}}\"}}}}" | tee .secret/config.json
 
     - name: Run php
-      run: for i in *.php; do echo "> php ${i}"; php ${i} | jq; done
+      run: for i in *.php; do echo "> php ${i}"; php ${i} | jq | tee github-action-run_$(date +%s).json; done
+
+    - name: Send discord
+      run: |
+        for i in github-action-run*; do curl -X POST -H 'Content-Type:multipart/form-data' -F 'file=@'${i} -F 'content=Launched github action: n138-kz/switchbot.' ${{secrets.discord_webhook_url}}; done
