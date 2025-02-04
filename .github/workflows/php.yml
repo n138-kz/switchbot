@@ -43,5 +43,5 @@ jobs:
       run: |
         for i in github-action-run*; do curl -X POST -H 'Content-Type:multipart/form-data' -F 'avatar_url=https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png' -F 'username=Github-Actions' -F 'file=@'${i} -F $'content=Launched github action: n138-kz/switchbot.\nRepository: https://github.com/n138-kz/switchbot/' ${{secrets.discord_webhook_url}}; done
 
-    - name: Send "Execute manual scenes" Hint
-      run: curl -X POST -d 'avatar_url=https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png' -d 'username=Github-Actions' -d $'content=Execute manual scenes\n```http\nPOST /v1.1/scenes/{sceneId}/execute\n```' ${{secrets.discord_webhook_url}}
+    #- name: Send "Execute manual scenes" Hint
+    #  run: curl -X POST -d 'avatar_url=https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png' -d 'username=Github-Actions' -d $'content=Execute manual scenes\n```http\nPOST /v1.1/scenes/{sceneId}/execute\n```' ${{secrets.discord_webhook_url}}
