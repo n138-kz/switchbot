@@ -6,34 +6,20 @@
 
 ## Example
 
-[Get device list](https://github.com/OpenWonderLabs/SwitchBotAPI?tab=readme-ov-file#php-example-code)  
+[Get device list](https://github.com/OpenWonderLabs/SwitchBotAPI?tab=readme-ov-file#php-example-code) (example: [example_device-list.php](example_device-list.php))  
 
 ```http
 GET https://api.switch-bot.com/v1.1/devices
 ```
-[example_device-list.php](example_device-list.php)
-```sh
-php example_device-list.php
-```
 
-[Get device status](https://github.com/OpenWonderLabs/SwitchBotAPI?tab=readme-ov-file#get-device-status)  
+[Get device status](https://github.com/OpenWonderLabs/SwitchBotAPI?tab=readme-ov-file#get-device-status) (example: [example_device-status.php](example_device-status.php))  
 
 ```http
 GET /v1.1/devices/{deviceId}/status
 ```
-[example_device-status.php](example_device-status.php)
-```sh
-php example_device-status.php
-```
 
-[Get Scenes list](https://github.com/OpenWonderLabs/SwitchBotAPI?tab=readme-ov-file#scenes)  
+[Get Scenes list](https://github.com/OpenWonderLabs/SwitchBotAPI?tab=readme-ov-file#scenes) (example: [example_scenes-list.php](example_scenes-list.php))  
 
 ```http
 GET /v1.1/scenes
 ```
-[example_scenes-list.php](example_scenes-list.php)
-```sh
-php example_scenes-list.php
-```
-
-
