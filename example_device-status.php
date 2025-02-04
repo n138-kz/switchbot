@@ -45,7 +45,11 @@ foreach($response['body']['deviceList'] as $k => $v){
 
     curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
     $response = curl_exec($curl);
-    $result[] = json_decode($response, TRUE);
+    $result[] = [
+        'deviceId'=>$v['deviceId'],
+        'deviceName'=>$v['deviceName'],
+        'deviceStatus'=>json_decode($response, TRUE),
+    ];
     curl_close($curl);
 }
 
