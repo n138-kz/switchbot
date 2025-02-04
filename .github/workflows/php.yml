@@ -5,8 +5,6 @@ on:
     branches: [ "main" ]
   schedule:
     - cron: "0 */6 * * *"
-  workflow_run:
-    branches: ["main"]
 
 permissions:
   contents: read
