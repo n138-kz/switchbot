@@ -24,6 +24,7 @@ $headers = array(
 
 curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 $response = curl_exec($curl);
+var_dump($response);
 curl_close($curl);
 
 function guidv4($data = null) {
