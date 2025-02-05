@@ -44,7 +44,7 @@ jobs:
         echo "{\"external\":{\"switchbot\":{\"credential\":{\"client_token\":\"${{secrets.switchbot_client_token}}\",\"client_secret\":\"${{secrets.switchbot_client_secret}}\"}}}}" | tee .secret/config.json
 
     - name: Run php
-      run: for i in *.php; do sleep 1; echo "> php ${i}"; php ${i} | jq | tee github-action-run_${i%}_$(date +%s).json; done
+      run: for i in *.php; do sleep 1; echo "> php ${i}"; php ${i} | jq | tee github-action-run_${i%.*}.json; done
 
     - name: Send discord
       run: |
