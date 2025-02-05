@@ -4,6 +4,10 @@
 
 [Copyright (c) 2025 Yuu Komiya (n138), Under MIT License](LICENSE)  
 
+## Official Docs
+- [![](https://www.google.com/s2/favicons?size=64&domain=https://blog.switchbot.jp/)【API】新バージョンAPI v1.1を公開しました](https://blog.switchbot.jp/announcement/api-v1-1/)
+- [![](https://www.google.com/s2/favicons?size=64&domain=https://github.com/)SwitchBotAPI](https://github.com/OpenWonderLabs/SwitchBotAPI)
+
 ## Example
 
 ### [Get device list](https://github.com/OpenWonderLabs/SwitchBotAPI?tab=readme-ov-file#php-example-code) (example: [example_device-list.php](example_device-list.php))
