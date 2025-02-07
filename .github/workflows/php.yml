@@ -1,8 +1,8 @@
 name: PHP Runner
 
 on:
+  workflow_dispatch:
   push:
-    branches: [ "main" ]
   schedule:
     - cron: "0 */6 * * *"
 
@@ -42,9 +42,10 @@ jobs:
     - name: Build config
       run: |
         echo "{\"external\":{\"switchbot\":{\"credential\":{\"client_token\":\"${{secrets.switchbot_client_token}}\",\"client_secret\":\"${{secrets.switchbot_client_secret}}\"}}}}" | tee .secret/config.json
+        cat .secret/config.json | jq
 
     - name: Run php
-      run: for i in *.php; do sleep 1; echo "> php ${i}"; php ${i} | jq | tee github-action-run_${i%.*}.json; done
+      run: for i in *.php; do sleep 1; for j in {0..9}; do echo '>'; done; echo "> php ${i}"; echo '# '$(date); php ${i} | jq | tee github-action-run_${i%.*}.json; done
 
     - name: Send discord
       run: |
