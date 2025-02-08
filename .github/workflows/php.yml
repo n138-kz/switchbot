@@ -6,7 +6,7 @@ on:
       sceneId:
         required: true
         type: string
-        default: '[{"sceneId":""}]'
+        default: '[{"sceneId":"","sceneName":""}]'
   push:
   schedule:
     - cron: "0 */6 * * *"
