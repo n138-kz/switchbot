@@ -73,7 +73,7 @@ jobs:
 
     - name: Build config
       run: |
-        echo "{\"external\":{\"switchbot\":{\"credential\":{\"client_token\":\"${{ secrets.switchbot_client_token }}\",\"client_secret\":\"${{ secrets.switchbot_client_secret }}\" }} }}" | tee .secret/config.json
+        echo '${{ env.switchbot_credential }}' | tee .secret/config.json
         cat .secret/config.json | jq
 
     - name: Run php
