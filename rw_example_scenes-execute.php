@@ -56,9 +56,10 @@ try {
     if(!is_readable($activates)){ throw new \Exception('Config file does readable.'); }
     
     $activates=json_decode(file_get_contents(__DIR__.'/.secret/activate_scenes.json'), TRUE);
-    if (!isset($activates['sceneId'])) { throw new \Exception('Config params does accessable.'); }
-    if (!isset($activates['sceneName'])) { $activates['sceneName'] = null; }
-} catch (\Exception $e) {
+    foreach($activates as $k => $v) {
+        if (!isset($v['sceneId'])) { throw new \Exception('Config params does accessable.'); }
+        if (!isset($v['sceneName'])) { $activates[$k]['sceneName'] = null; }
+    } catch (\Exception $e) {
 	echo json_encode([
 		'message'=>$e->getMessage(),
 		'file'=>[
