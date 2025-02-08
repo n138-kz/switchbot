@@ -10,7 +10,7 @@ env:
   discord_avatar_url: https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png
   discord_username: Github-Actions
   github_context: '{"GITHUB_REPOSITORY":"${{ github.repository }}","GITHUB_REF_NAME":"${{ github.ref_name }}","GITHUB_TOKEN":"${{ github.token }}","GITHUB_ACTION":"${{ github.action }}","GITHUB_ACTION_PATH":"${{ github.action_path }}","GITHUB_SHA":"${{ github.sha }}","GITHUB_WORKFLOW":"${{ github.workflow }}","GITHUB_JOB":"${{ github.job }}","GITHUB_OUTPUT":"${{ github.output }}"}'
-  switchbot_credential: '{"external":{"switchbot":{"credential":{"client_token":"${{ secrets.switchbot_client_token }}","client_secret":"${{ secrets.switchbot_client_secret }}" },"apimanuals":"https://github.com/OpenWonderLabs/SwitchBotAPI"}}}'
+  switchbot_credential: '{"external":{"switchbot":{"credential":{"client_token":"${{ secrets.switchbot_client_token }}","client_secret":"${{ secrets.switchbot_client_secret }}" },"apimanuals":"${{ github.server_url }}/OpenWonderLabs/SwitchBotAPI"}}}'
 
 permissions:
   contents: read
@@ -29,7 +29,7 @@ jobs:
 
     - name: Send discord
       run: |
-        for i in github-action-run*; do curl -X POST -H 'Content-Type:multipart/form-data' -F 'avatar_url=${{ env.discord_avatar_url }}' -F 'username=${{ env.discord_username }}' -F 'file=@'${i} -F $'content=Launched github action: [${{ github.repository }}](https://github.com/${{ github.repository }}).\n' ${{ secrets.discord_webhook_url }} | jq; done
+        for i in github-action-run*; do curl -X POST -H 'Content-Type:multipart/form-data' -F 'avatar_url=${{ env.discord_avatar_url }}' -F 'username=${{ env.discord_username }}' -F 'file=@'${i} -F $'content=Launched github action: [${{ github.repository }}](${{ github.server_url }}/${{ github.repository }}).\n' ${{ secrets.discord_webhook_url }} | jq; done
 
   send_switchbot_context:
 
@@ -44,7 +44,7 @@ jobs:
 
     - name: Send discord
       run: |
-        for i in github-action-run*; do curl -X POST -H 'Content-Type:multipart/form-data' -F 'avatar_url=${{ env.discord_avatar_url }}' -F 'username=${{ env.discord_username }}' -F 'file=@'${i} -F $'content=Launched github action: [${{ github.repository }}](https://github.com/${{ github.repository }}).\n' ${{ secrets.discord_webhook_url }} | jq; done
+        for i in github-action-run*; do curl -X POST -H 'Content-Type:multipart/form-data' -F 'avatar_url=${{ env.discord_avatar_url }}' -F 'username=${{ env.discord_username }}' -F 'file=@'${i} -F $'content=Launched github action: [${{ github.repository }}](${{ github.server_url }}/${{ github.repository }}).\n' ${{ secrets.discord_webhook_url }} | jq; done
       
   testrun:
 
@@ -81,7 +81,7 @@ jobs:
 
     - name: Send discord
       run: |
-        for i in github-action-run*; do curl -X POST -H 'Content-Type:multipart/form-data' -F 'avatar_url=${{ env.discord_avatar_url }}' -F 'username=${{ env.discord_username }}' -F 'file=@'${i} -F $'content=Launched github action: [${{ github.repository }}](https://github.com/${{ github.repository }}).\n' ${{ secrets.discord_webhook_url }} | jq; done
+        for i in github-action-run*; do curl -X POST -H 'Content-Type:multipart/form-data' -F 'avatar_url=${{ env.discord_avatar_url }}' -F 'username=${{ env.discord_username }}' -F 'file=@'${i} -F $'content=Launched github action: [${{ github.repository }}](${{ github.server_url }}/${{ github.repository }}).\n' ${{ secrets.discord_webhook_url }} | jq; done
 
     #- name: Send discord
     #  run: curl -X POST -d 'avatar_url=${{ env.discord_avatar_url }}' -d 'username=Github-Actions' -d $'content=Execute manual scenes\n```http\nPOST /v1.1/scenes/{sceneId}/execute\n```' ${{ secrets.discord_webhook_url }}
