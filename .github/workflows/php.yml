@@ -1,6 +1,12 @@
 name: PHP Runner
 
 on:
+  workflow_dispatch:
+    inputs:
+      sceneId:
+        required: true
+        type: string
+        default: ${{ vars.SWITCHBOT_ACTIVATE_SCENE }}
   workflow_call:
     inputs:
       sceneId:
