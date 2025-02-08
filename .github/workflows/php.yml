@@ -6,13 +6,7 @@ on:
       sceneId:
         required: true
         type: string
-        default: ${{ vars.SWITCHBOT_ACTIVATE_SCENE }}
-  workflow_call:
-    inputs:
-      sceneId:
-        required: true
-        type: string
-        default: ${{ vars.SWITCHBOT_ACTIVATE_SCENE }}
+        default: '[{"sceneId":""}]'
   push:
   schedule:
     - cron: "0 */6 * * *"
