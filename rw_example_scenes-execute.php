@@ -56,11 +56,6 @@ try {
     if(!file_exists($activates)){ throw new \Exception('Config file does not exist.'); }
     if(!is_readable($activates)){ throw new \Exception('Config file does readable.'); }
     if(!filesize($activates)){ throw new \Exception('Config file does readable.'); }
-    
-    $activates=json_decode(file_get_contents(__DIR__.'/.secret/activate_scenes.json'), TRUE);
-    foreach($activates as $k => $v) {
-        if (!isset($v)) { throw new \Exception('Config params does accessable.'); }
-    }
 } catch (\Exception $e) {
     echo json_encode([
         'message'=>$e->getMessage(),
@@ -69,6 +64,17 @@ try {
         ],
     ], JSON_OPTION_ENCODE);
 	file_put_contents($activates, json_encode([], JSON_OPTION_ENCODE));
+	exit(1);
+}
+
+try {
+    $activates=json_decode(file_get_contents(__DIR__.'/.secret/activate_scenes.json'), TRUE);
+    if (!isset($activates['runCount'])) { throw new \Exception('Config params does accessable.'); }
+    if (!isset($activates['sceneId'])) { throw new \Exception('Config params does accessable.'); }
+} catch (\Exception $e) {
+    echo json_encode([
+        'message'=>$e->getMessage(),
+    ], JSON_OPTION_ENCODE);
 	exit(1);
 }
 
