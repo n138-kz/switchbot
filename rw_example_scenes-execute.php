@@ -99,6 +99,7 @@ for ($i=0; $i<$activates['runCount']; $i++) {
         curl_setopt($curl, CURLOPT_POST, TRUE);
         $response[$v][] = [
             'sceneId' => $v,
+            'sceneDetail' => getScenes($v),
             'response' => json_decode(curl_exec($curl), JSON_DEPTH, JSON_OPTION_DECODE),
         ];
         curl_close($curl);
@@ -115,4 +116,33 @@ function guidv4($data = null) {
 
     // Output the 36 character UUID.
     return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
+}
+function getScenes($sceneId=null) {
+    $url = "https://api.switch-bot.com/v1.1/scenes";
+
+    $curl = curl_init($url);
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+    $headers = array(
+        "Content-Type:application/json",
+        "Authorization:" . $token,
+        "sign:" . $sign,
+        "nonce:" . $nonce,
+        "t:" . $t
+    );
+
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+    $response = curl_exec($curl);
+    curl_close($curl);
+    $response = json_decode($response, JSON_DEPTH, JSON_OPTION_DECODE)['body'];
+    if ($sceneId!==null) {
+        foreach($response as $k => $v) {
+            if ($v['sceneId'] == $sceneId) {
+                $response = $v;
+                break;
+            }
+        }
+    }
+    return $response;
 }
