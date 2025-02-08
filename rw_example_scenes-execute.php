@@ -59,13 +59,14 @@ try {
     foreach($activates as $k => $v) {
         if (!isset($v['sceneId'])) { throw new \Exception('Config params does accessable.'); }
         if (!isset($v['sceneName'])) { $activates[$k]['sceneName'] = null; }
-    } catch (\Exception $e) {
-	echo json_encode([
-		'message'=>$e->getMessage(),
-		'file'=>[
-			'path'=>$activates,
-		],
-	], JSON_OPTION_ENCODE);
+    }
+} catch (\Exception $e) {
+        echo json_encode([
+            'message'=>$e->getMessage(),
+            'file'=>[
+                'path'=>$activates,
+            ],
+        ], JSON_OPTION_ENCODE);
 	file_put_contents($activates, json_encode(['sceneId'=>'(Required)','sceneName'=>'(Optional)'], JSON_OPTION_ENCODE));
 	exit(1);
 }
