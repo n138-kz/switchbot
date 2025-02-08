@@ -16,6 +16,7 @@ env:
   discord_username: Github-Actions
   github_context: '{"GITHUB_REPOSITORY":"${{ github.repository }}","GITHUB_REF_NAME":"${{ github.ref_name }}","GITHUB_TOKEN":"${{ github.token }}","GITHUB_ACTION":"${{ github.action }}","GITHUB_ACTION_PATH":"${{ github.action_path }}","GITHUB_SHA":"${{ github.sha }}","GITHUB_WORKFLOW":"${{ github.workflow }}","GITHUB_JOB":"${{ github.job }}","GITHUB_ENV":"${{ github.env }}","GITHUB_EVENT":"${{ github.event }}","GITHUB_EVENT_NAME":"${{ github.event_name }}"}'
   switchbot_context: '{"external":{"switchbot":{"credential":{"client_token":"${{ secrets.switchbot_client_token }}","client_secret":"${{ secrets.switchbot_client_secret }}" },"apimanuals":"${{ github.server_url }}/OpenWonderLabs/SwitchBotAPI"}}}'
+  switchbot_activate_scene: ${{ inputs.sceneId || vars.SWITCHBOT_ACTIVATE_SCENE }}
 
 permissions:
   contents: read
@@ -96,7 +97,7 @@ jobs:
 
     - name: Build config
       run: |
-        echo '${{ vars.SWITCHBOT_ACTIVATE_SCENE }}' | tee .secret/config.json
+        echo '${{ env.switchbot_activate_scene }}' | tee .secret/config.json
         cat .secret/activate_scenes.json | jq
 
     - name: Run php
