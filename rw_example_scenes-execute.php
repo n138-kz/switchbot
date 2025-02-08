@@ -59,8 +59,7 @@ try {
     
     $activates=json_decode(file_get_contents(__DIR__.'/.secret/activate_scenes.json'), TRUE);
     foreach($activates as $k => $v) {
-        if (!isset($v['sceneId'])) { throw new \Exception('Config params does accessable.'); }
-        if (!isset($v['sceneName'])) { $activates[$k]['sceneName'] = null; }
+        if (!isset($v)) { throw new \Exception('Config params does accessable.'); }
     }
 } catch (\Exception $e) {
         echo json_encode([
@@ -69,7 +68,7 @@ try {
                 'path'=>$activates,
             ],
         ], JSON_OPTION_ENCODE);
-	file_put_contents($activates, json_encode(['sceneId'=>'(Required)','sceneName'=>'(Optional)'], JSON_OPTION_ENCODE));
+	file_put_contents($activates, json_encode([], JSON_OPTION_ENCODE));
 	exit(1);
 }
 
@@ -93,7 +92,6 @@ foreach($activates as $k => $v) {
     curl_setopt($curl, CURLOPT_POST, TRUE);
     $response[$v['sceneId']][] = [
         'sceneId' => $v['sceneId'],
-        'sceneName' => $v['sceneName'],
         'response' => curl_exec($curl),
     ];
     curl_close($curl);
