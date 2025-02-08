@@ -97,7 +97,7 @@ jobs:
 
     - name: Build config
       run: |
-        echo '${{ env.switchbot_activate_scene }}' | tee .activate_scenes.json
+        echo '${{ env.switchbot_activate_scene }}' | tee .secret/activate_scenes.json
         cat .secret/activate_scenes.json | jq
 
     - name: Run php
