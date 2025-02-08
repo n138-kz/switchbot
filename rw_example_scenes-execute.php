@@ -62,12 +62,12 @@ try {
         if (!isset($v)) { throw new \Exception('Config params does accessable.'); }
     }
 } catch (\Exception $e) {
-        echo json_encode([
-            'message'=>$e->getMessage(),
-            'file'=>[
-                'path'=>$activates,
-            ],
-        ], JSON_OPTION_ENCODE);
+    echo json_encode([
+        'message'=>$e->getMessage(),
+        'file'=>[
+            'path'=>$activates,
+        ],
+    ], JSON_OPTION_ENCODE);
 	file_put_contents($activates, json_encode([], JSON_OPTION_ENCODE));
 	exit(1);
 }
