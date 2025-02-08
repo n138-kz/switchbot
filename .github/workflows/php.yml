@@ -9,7 +9,8 @@ on:
 env:
   discord_avatar_url: https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png
   discord_username: Github-Actions
-  github_context: content=`["GITHUB_REPOSITORY":"${{ github.repository }}","GITHUB_REF_NAME":"${{ github.ref_name }}","GITHUB_TOKEN":"${{ github.token }}"]`
+  github_context: |
+    `["GITHUB_REPOSITORY":"${{ github.repository }}","GITHUB_REF_NAME":"${{ github.ref_name }}","GITHUB_TOKEN":"${{ github.token }}"]`
 
 permissions:
   contents: read
@@ -22,8 +23,13 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Send GITHUB Context
-      run: curl -X POST -d 'avatar_url=${{ env.discord_avatar_url }}' -d 'username=${{ env.discord_username }}' -d '${{ env.github_context }}' ${{ secrets.discord_webhook_url }}
+    - name: Prepare file for GITHUB Context
+      run: |
+        cat ${{ env.github_context }} | jq | tee github-action-run_github-context.json
+
+    - name: Send discord
+      run: |
+        for i in github-action-run*; do curl -X POST -H 'Content-Type:multipart/form-data' -F 'avatar_url=${{ env.discord_avatar_url }}' -F 'username=${{ env.discord_username }}' -F 'file=@'${i} -F $'content=Launched github action: [${{ github.repository }}](https://github.com/${{ github.repository }}).\n' ${{ secrets.discord_webhook_url }} | jq; done
 
   build:
 
