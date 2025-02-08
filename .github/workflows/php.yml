@@ -24,7 +24,6 @@ jobs:
 
     - name: Prepare file for GITHUB Context
       run: |
-        echo '${{ env.github_context }}'
         echo '${{ env.github_context }}' | jq | tee github-action-run_github-context.json
 
     - name: Send discord
