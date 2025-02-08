@@ -88,3 +88,15 @@ jobs:
       run: |
         echo '${{ env.switchbot_context }}' | tee .secret/config.json
         cat .secret/config.json | jq
+
+    - name: Build config
+      run: |
+        echo '${{ vars.SWITCHBOT_ACTIVATE_SCENE }}' | tee .secret/config.json
+        cat .secret/activate_scenes.json | jq
+
+    - name: Run php
+      run: for i in rw_example_*.php; do sleep 1; for j in {0..9}; do echo '>'; done; echo "> php ${i}"; echo '# '$(date); php ${i} | jq | tee github-action-run_${i%.*}.json; done
+
+    - name: Send discord
+      run: |
+        for i in github-action-run*; do curl -X POST -H 'Content-Type:multipart/form-data' -F 'avatar_url=${{ env.discord_avatar_url }}' -F 'username=${{ env.discord_username }}' -F 'file=@'${i} -F $'content=Launched github action: [${{ github.repository }}](${{ github.server_url }}/${{ github.repository }}).\n' ${{ secrets.discord_webhook_url }} | jq; done
