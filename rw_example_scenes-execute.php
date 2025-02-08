@@ -54,6 +54,7 @@ try {
     $activates=__DIR__.'/.secret/activate_scenes.json';
     if(!file_exists($activates)){ throw new \Exception('Config file does not exist.'); }
     if(!is_readable($activates)){ throw new \Exception('Config file does readable.'); }
+    if(!filesize($activates)){ throw new \Exception('Config file does readable.'); }
     
     $activates=json_decode(file_get_contents(__DIR__.'/.secret/activate_scenes.json'), TRUE);
     foreach($activates as $k => $v) {
