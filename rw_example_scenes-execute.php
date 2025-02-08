@@ -50,20 +50,10 @@ $sign = hash_hmac('sha256', $data, $secret,true);
 $sign = strtoupper(base64_encode($sign));
 
 $activates=__DIR__.'/.secret/activate_scenes.json';
-if(!file_exists($config)||!is_readable($config)){
-	echo json_encode([
-		'message'=>'Config file does accessable.',
-		'file'=>[
-			'path'=>$activates,
-		],
-	], JSON_OPTION_ENCODE);
-	file_put_contents($activates, json_encode(['sceneId'=>'(Required)','sceneName'=>'(Optional)'], JSON_OPTION_ENCODE));
-	exit(1);
-}
 try {
     $activates=__DIR__.'/.secret/activate_scenes.json';
-    if(!file_exists($config)){ throw new \Exception('Config file does not exist.'); }
-    if(!is_readable($config)){ throw new \Exception('Config file does readable.'); }
+    if(!file_exists($activates)){ throw new \Exception('Config file does not exist.'); }
+    if(!is_readable($activates)){ throw new \Exception('Config file does readable.'); }
     
     $activates=json_decode(file_get_contents(__DIR__.'/.secret/activate_scenes.json'), TRUE);
     if (!isset($activates['sceneId'])) { throw new \Exception('Config params does accessable.'); }
