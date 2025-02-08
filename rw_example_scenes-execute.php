@@ -74,7 +74,7 @@ try {
 
 $response=[];
 foreach($activates as $k => $v) {
-    $url = 'https://api.switch-bot.com/v1.1/scenes/' . $v['sceneId'] . '/execute';
+    $url = 'https://api.switch-bot.com/v1.1/scenes/' . $v . '/execute';
     
     $curl = curl_init($url);
     curl_setopt($curl, CURLOPT_URL, $url);
@@ -90,8 +90,8 @@ foreach($activates as $k => $v) {
     
     curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($curl, CURLOPT_POST, TRUE);
-    $response[$v['sceneId']][] = [
-        'sceneId' => $v['sceneId'],
+    $response[$v][] = [
+        'sceneId' => $v,
         'response' => curl_exec($curl),
     ];
     curl_close($curl);
