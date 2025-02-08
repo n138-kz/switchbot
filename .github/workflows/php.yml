@@ -81,7 +81,7 @@ jobs:
 
     - name: Send discord
       run: |
-        for i in github-action-run*; do curl -X POST -H 'Content-Type:multipart/form-data' -F 'avatar_url=${{ env.discord_avatar_url }}' -F 'username=${{ env.discord_username }}' -F 'file=@'${i} -F $'content=Launched github action: [${{ github.repository }}](${{ github.server_url }}/${{ github.repository }}/actions).\n' ${{ secrets.discord_webhook_url }} | jq; done
+        for i in github-action-run*; do curl -X POST -H 'Content-Type:multipart/form-data' -F 'avatar_url=${{ env.discord_avatar_url }}' -F 'username=${{ env.discord_username }}' -F 'files=@'${i} -F $'content=Launched github action: [${{ github.repository }}](${{ github.server_url }}/${{ github.repository }}/actions).\n' ${{ secrets.discord_webhook_url }} | jq; done
 
     #- name: Send discord
     #  run: curl -X POST -d 'avatar_url=${{ env.discord_avatar_url }}' -d 'username=Github-Actions' -d $'content=Execute manual scenes\n```http\nPOST /v1.1/scenes/{sceneId}/execute\n```' ${{ secrets.discord_webhook_url }}
