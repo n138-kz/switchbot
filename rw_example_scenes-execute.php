@@ -99,7 +99,7 @@ for ($i=0; $i<$activates['runCount']; $i++) {
         curl_setopt($curl, CURLOPT_POST, TRUE);
         $response[$v][] = [
             'sceneId' => $v,
-            'response' => curl_exec($curl),
+            'response' => json_decode(curl_exec($curl), JSON_DEPTH, JSON_OPTION_DECODE),
         ];
         curl_close($curl);
     }    
