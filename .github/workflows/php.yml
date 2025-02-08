@@ -62,7 +62,7 @@ jobs:
         cat .secret/config.json | jq
 
     - name: Run php
-      run: for i in *.php; do sleep 1; for j in {0..9}; do echo '>'; done; echo "> php ${i}"; echo '# '$(date); php ${i} | jq | tee github-action-run_${i%.*}.json; done
+      run: for i in example_*.php; do sleep 1; for j in {0..9}; do echo '>'; done; echo "> php ${i}"; echo '# '$(date); php ${i} | jq | tee github-action-run_${i%.*}.json; done
 
     - name: Send discord
       run: |
