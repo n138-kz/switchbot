@@ -79,29 +79,31 @@ try {
 }
 
 $response=[];
-foreach($activates as $k => $v) {
-    $url = 'https://api.switch-bot.com/v1.1/scenes/' . $v . '/execute';
-    
-    $curl = curl_init($url);
-    curl_setopt($curl, CURLOPT_URL, $url);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    
-    $headers = array(
-        "Content-Type:application/json",
-        "Authorization:" . $token,
-        "sign:" . $sign,
-        "nonce:" . $nonce,
-        "t:" . $t
-    );
-    
-    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-    curl_setopt($curl, CURLOPT_POST, TRUE);
-    $response[$v][] = [
-        'sceneId' => $v,
-        'response' => curl_exec($curl),
-    ];
-    curl_close($curl);
-}    
+for ($i=0; $i<$activates['runCount']; $i++) { 
+    foreach($activates['sceneId'] as $k => $v) {
+        $url = 'https://api.switch-bot.com/v1.1/scenes/' . $v . '/execute';
+        
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        
+        $headers = array(
+            "Content-Type:application/json",
+            "Authorization:" . $token,
+            "sign:" . $sign,
+            "nonce:" . $nonce,
+            "t:" . $t
+        );
+        
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($curl, CURLOPT_POST, TRUE);
+        $response[$v][] = [
+            'sceneId' => $v,
+            'response' => curl_exec($curl),
+        ];
+        curl_close($curl);
+    }    
+}
 echo json_encode($response, JSON_OPTION_ENCODE);
 
 function guidv4($data = null) {
