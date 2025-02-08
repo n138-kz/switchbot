@@ -53,21 +53,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    #- name: Send GITHUB Context
-    #  run: curl -X POST -d 'avatar_url=${{ env.discord_avatar_url }}' -d 'username=${{ env.discord_username }}' -d $'content=`["GITHUB_REPOSITORY":"'${{ github.repository }}'","GITHUB_REF_NAME":"'${{ github.ref_name }}'"]`' ${{ secrets.discord_webhook_url }}
-
-    #- name: Validate composer.json and composer.lock
-    #  run: composer validate --strict
-
-    #- name: Install dependencies
-    #  run: composer install --prefer-dist --no-progress
-
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
-
-    # - name: Run test suite
-    #   run: composer run-script test
-
     - name: Build directory
       run: mkdir .secret
 
