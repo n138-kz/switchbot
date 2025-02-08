@@ -97,9 +97,11 @@ for ($i=0; $i<$activates['runCount']; $i++) {
         
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($curl, CURLOPT_POST, TRUE);
+        $scenes = getScenes($token,$sign,$nonce,$t,$v);
         $response[$v][] = [
+            'runnedAt' => time(),
             'sceneId' => $v,
-            'sceneDetail' => getScenes($token,$sign,$nonce,$t,$v),
+            'sceneName' => $scenes['sceneName'],
             'response' => json_decode(curl_exec($curl), JSON_DEPTH, JSON_OPTION_DECODE),
         ];
         curl_close($curl);
