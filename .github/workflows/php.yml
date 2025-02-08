@@ -10,7 +10,7 @@ env:
   discord_avatar_url: https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png
   discord_username: Github-Actions
   github_context: |
-    `["GITHUB_REPOSITORY":"${{ github.repository }}","GITHUB_REF_NAME":"${{ github.ref_name }}","GITHUB_TOKEN":"${{ github.token }}"]`
+    ["GITHUB_REPOSITORY":"${{ github.repository }}","GITHUB_REF_NAME":"${{ github.ref_name }}","GITHUB_TOKEN":"${{ github.token }}"]
 
 permissions:
   contents: read
