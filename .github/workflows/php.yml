@@ -46,7 +46,7 @@ jobs:
       run: |
         for i in github-action-run*; do curl -X POST -H 'Content-Type:multipart/form-data' -F 'avatar_url=${{ env.discord_avatar_url }}' -F 'username=${{ env.discord_username }}' -F 'file=@'${i} -F $'content=Launched github action: [${{ github.repository }}](https://github.com/${{ github.repository }}).\n' ${{ secrets.discord_webhook_url }} | jq; done
       
-  build:
+  testrun:
 
     runs-on: ubuntu-latest
 
