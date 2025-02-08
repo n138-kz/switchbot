@@ -80,9 +80,6 @@ jobs:
 
   testrun_activate_scene:
 
-    needs: 
-      testrun
-
     runs-on: ubuntu-latest
 
     steps:
