@@ -98,7 +98,7 @@ jobs:
 
     - name: Build config
       run: |
-        echo '{"runCount": ${{ inputs.runCount }},"sceneId":["${{ inputs.sceneId }}"]}' | tee .secret/activate_scenes.json
+        echo '{"runCount": ${{ inputs.runCount || 0 }},"sceneId":["${{ inputs.sceneId }}"]}' | tee .secret/activate_scenes.json
         cat .secret/activate_scenes.json | jq
 
     - name: Run php
