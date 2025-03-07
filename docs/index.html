@@ -59,6 +59,30 @@
 			api_credential_secret.value=config.api_credential.secret
 		}
 		window.addEventListener('load', ()=>{load_api_credential()})
+		function store_api_credential(caller=null) {
+			try {
+				console.log(caller.parentNode);
+				api_credential_token = document.querySelector('#api_credential_token')
+				api_credential_secret = document.querySelector('#api_credential_secret')
+				config = JSON.stringify({
+					api_credential: {
+						token: api_credential_token.value,
+						secret: api_credential_secret.value,
+					}
+				})
+				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.' + 'api_credential', config );
+
+				result = document.createElement('div')
+				result.innerText = 'Credential cached'
+				result.classList.add('disappearance_at5s')
+				caller.parentNode.appendChild(result)
+				setTimeout(()=>{
+					Array.from(document.querySelectorAll('.disappearance_at5s')).map((e)=>{
+						e.remove()
+					})
+				}, 5000)
+			} catch (error) {
+				console.error(error);
 			}
 		}
 			}
