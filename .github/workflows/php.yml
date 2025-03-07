@@ -9,7 +9,6 @@ on:
       runCount:
         type: number
         default: 1
-  push:
   schedule:
     - cron: "0 5 */2 * *"
 
