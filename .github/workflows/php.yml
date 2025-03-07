@@ -11,7 +11,7 @@ on:
         default: 1
   push:
   schedule:
-    - cron: "0 5 1 * *"
+    - cron: "0 5 */2 * *"
 
 env:
   discord_avatar_url: https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png
