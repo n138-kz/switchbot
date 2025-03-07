@@ -50,6 +50,15 @@
 			init_setFavicon()
 			init_setHeaderText()
 		})
+		function load_api_credential() {
+			api_credential_token = document.querySelector('#api_credential_token')
+			api_credential_secret = document.querySelector('#api_credential_secret')
+			config = localStorage.getItem( (btoa(location.href)).slice(0, 16) + '.' + 'api_credential' );
+			config = config?JSON.parse(config):{api_credential:{token:'',secret:''}}
+			api_credential_token.value=config.api_credential.token
+			api_credential_secret.value=config.api_credential.secret
+		}
+		window.addEventListener('load', ()=>{load_api_credential()})
 			}
 		}
 			}
