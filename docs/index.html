@@ -89,6 +89,10 @@
 				console.error(error);
 			}
 		}
+		function getTextEncoding(text) {
+			const enc = new TextEncoder('utf-8');
+			return enc.encode(text);
+		}
 		function genAuthnParams(token, secret) {
 			const t = Date.now();
 			const nonce = self.crypto.randomUUID();
