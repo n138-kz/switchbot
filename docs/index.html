@@ -97,6 +97,9 @@
 		function genAuthnParams(token, secret) {
 			const t = Date.now();
 			const nonce = self.crypto.randomUUID();
+			const data = token + t + nonce;
+			const sign = btoa(CryptoJS.HmacSHA256(data, secret))
+			console.log(sign);
 		}
 		async function getDevicesList() {
 			api_credential_token = document.querySelector('#api_credential_token').value
