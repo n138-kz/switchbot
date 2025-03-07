@@ -87,6 +87,12 @@
 		}
 			}
 		}
+		async function getDevicesList() {
+			api_credential_token = document.querySelector('#api_credential_token').value
+			api_credential_secret = document.querySelector('#api_credential_secret').value
+			genAuthnParams(api_credential_token, api_credential_secret)
+		}
+	</script>
 </head><body>
 <div>
 	<div>
