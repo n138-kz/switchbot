@@ -25,3 +25,6 @@ build/
 *.exe
 *.msi
 *.jar
+
+#
+docs/assets/crypto-js-4.2.0
