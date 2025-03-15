@@ -79,6 +79,11 @@ header("Access-Control-Allow-Headers: Content-Type, Content-Length, Origin, Acce
 header('Server: Hidden');
 header('X-Powered-By: Hidden');
 
+const JSON_OPTION = JSON_INVALID_UTF8_IGNORE | JSON_THROW_ON_ERROR;
+const JSON_DEPTH = 512;
+const JSON_OPTION_ENCODE = JSON_OPTION;
+const JSON_OPTION_DECODE = JSON_OPTION;
+
 $webapp_client = new webapp_client();
 $webapp_client->result['connection']['method'] = $_SERVER['REQUEST_METHOD'];
 
@@ -88,11 +93,6 @@ if( ! ( substr( strtolower( $_SERVER['REQUEST_METHOD'] ), 0, 6 ) == 'option' || 
 	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
 	exit(1);
 }
-
-const JSON_OPTION = JSON_INVALID_UTF8_IGNORE | JSON_THROW_ON_ERROR;
-const JSON_DEPTH = 512;
-const JSON_OPTION_ENCODE = JSON_OPTION;
-const JSON_OPTION_DECODE = JSON_OPTION;
 
 $config_base = '{"external": {"switchbot": {"credential": {"client_token": "","client_secret": ""},"apimanuals": ["https://github.com/OpenWonderLabs/SwitchBotAPI"],"curl": {"timeout": 30}}}}';
 $config_base = json_decode($config_base, JSON_OPTION_ENCODE);
