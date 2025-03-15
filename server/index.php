@@ -16,13 +16,8 @@ class webapp_client{
         return $this->result['message'];
     }
     function result_return() {
-        $result = [];
-        $result['message'] = $this->message;
+        $result = $this->result;
         $result['evented_at'] = time();
-        $result['connection'] = [];
-        $result['connection']['method'] = '';
-        $result['file'] = [];
-        $result['file']['path'] = '';
         return $result;
     }
 }
