@@ -131,6 +131,8 @@ class switchbot{
 			return $response;
 		}
 	}
+	function runScene($token,$sign,$nonce,$t,$deviceId=null) {
+	}
 }
 date_default_timezone_set('Asia/Tokyo');
 header('Content-Type: application/json; charset=UTF-8');
@@ -245,6 +247,7 @@ if (false) {
 	$sceneId = isset($_POST['scene_id'])?$_POST['scene_id']:''
 	$webapp_client->result['data_id'] = 'switchbot.'.$accessmode;
 	$webapp_client->result['data'] = [
+		$webapp_client->result['data_id']=>$switchbot->runScene($token,$sign,$nonce,$t,$sceneId),
 	];
 	if(is_null($webapp_client->result['data'])){
 		$webapp_client->result['message'] = 'API Credential has invalid.';
