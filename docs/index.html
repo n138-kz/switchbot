@@ -115,6 +115,7 @@
 				mode: 'cors',
 			});
 			response = await request;
+			console.log(response);
 			if(response.headers.get('content-type').split(';')[0].toLocaleLowerCase()=='application/json'){
 				response = await response.json();
 				
@@ -175,6 +176,55 @@
 				await getDevicesList();
 			})
 		});
+		async function getScenesList() {
+			const api_credential_token = document.querySelector('#api_credential_token').value
+			const api_credential_secret = document.querySelector('#api_credential_secret').value
+			const x_token = genAuthnParams(api_credential_token, api_credential_secret)
+			let query_params = new URLSearchParams({'x-token': x_token,accessmode:'scenes_list',})
+			let api_url = 'https://api.n138.jp/switchbot/server/?'+query_params;
+
+			request = await fetch(api_url, {
+				method: 'GET',
+				mode: 'cors',
+			});
+			response = await request;
+			console.log(response);
+			if(response.headers.get('content-type').split(';')[0].toLocaleLowerCase()=='application/json'){
+				response = await response.json();
+				
+				Array.from(document.querySelectorAll('.switchbotapi_scenes_list')).map((e)=>{
+					console.log(e);
+					e.remove();
+				});
+
+				console.log(response.data[response.data_id]);
+				let table=document.createElement('table');
+				table.classList.add('switchbotapi_scenes_list');
+				columns=['sceneName','sceneId'];
+				let line=null, item=null;
+				line=document.createElement('tr');
+				for(let i=0;i<columns.length;i++){
+					item=document.createElement('th');
+					item.innerText=columns[i];
+					line.appendChild(item);
+				}
+				table.appendChild(line);
+				for(let i=0;i<response.data[response.data_id].length;i++){
+					line=document.createElement('tr');
+					item=document.createElement('td');
+					item.innerText=response.data[response.data_id][i]['sceneName'];
+					item.dataset.sceneId=response.data[response.data_id][i]['sceneId']
+
+					line.appendChild(item);
+					table.appendChild(line);
+				}
+
+				Array.from(document.querySelectorAll('.switchbotapi_scenes')).map((e)=>{
+					console.log(e);
+					e.after(table);
+				});
+			}
+		}
 	</script>
 </head><body>
 <div>
@@ -191,6 +241,13 @@
 	<div>
 		<h2>Switchbot API Devices</h2>
 		<div class="switchbotapi switchbotapi_devices">
+			<p>Get list</p>
+			<img src="assets/icooonmono11481.svg">
+		</div>
+	</div>
+	<div>
+		<h2>Switchbot API Scenes</h2>
+		<div class="switchbotapi switchbotapi_scenes">
 			<p>Get list</p>
 			<img src="assets/icooonmono11481.svg">
 		</div>
