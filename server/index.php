@@ -71,12 +71,6 @@ class switchbot{
 		return $response;
 	}
 	function getDevices($token,$sign,$nonce,$t,$deviceId=null) {
-		$url = "https://api.switch-bot.com/v1.1/devices";
-
-		$curl = curl_init($url);
-		curl_setopt($curl, CURLOPT_URL, $url);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-
 		$headers = array(
 			"Content-Type:application/json",
 			"Authorization:" . $token,
@@ -85,31 +79,57 @@ class switchbot{
 			"t:" . $t
 		);
 
-		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-		$response = curl_exec($curl);
-		curl_close($curl);
+		if(false){
+		}elseif(!is_null($deviceId)){
+			$url = "https://api.switch-bot.com/v1.1/devices/${deviceId}/status";
 
-		$response = json_decode($response, JSON_DEPTH, JSON_OPTION_DECODE);
-		if(!isset($response['body'])){
-			return null;
-		}
+			$curl = curl_init($url);
+			curl_setopt($curl, CURLOPT_URL, $url);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+			$response = curl_exec($curl);
+			curl_close($curl);
 
-		$response = $response['body'];
-		if(!isset($response['deviceList'])){
-			return null;
-		}
+			$response = json_decode($response, JSON_DEPTH, JSON_OPTION_DECODE);
+			if(!isset($response['body'])){
+				return null;
+			}
 
-		$response = $response['deviceList'];
-		if ($deviceId!==null) {
-			foreach($response as $k => $v) {
-				if ($v['deviceId'] == $sceneId) {
-					$response = $v;
-					break;
+			$response = $response['body'];
+			return $response;
+
+		}else{
+			$url = "https://api.switch-bot.com/v1.1/devices";
+
+			$curl = curl_init($url);
+			curl_setopt($curl, CURLOPT_URL, $url);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+			$response = curl_exec($curl);
+			curl_close($curl);
+
+			$response = json_decode($response, JSON_DEPTH, JSON_OPTION_DECODE);
+			if(!isset($response['body'])){
+				return null;
+			}
+
+			$response = $response['body'];
+			if(!isset($response['deviceList'])){
+				return null;
+			}
+
+			$response = $response['deviceList'];
+			foreach($response as $k1 => $v1){
+				foreach($response as $k2 => $v2){
+					if($v1['deviceId']!=$v2['deviceId']){
+						continue;
+					}
+					$response[$k1]=array_merge($response[$k1],$this->getDevices($token,$sign,$nonce,$t,$v1['deviceId']));
 				}
 			}
-		}
 
-		return $response;
+			return $response;
+		}
 	}
 }
 date_default_timezone_set('Asia/Tokyo');
