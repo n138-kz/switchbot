@@ -117,7 +117,38 @@
 			response = await request;
 			if(response.headers.get('content-type').split(';')[0].toLocaleLowerCase()=='application/json'){
 				response = await response.json();
-				return await response;
+				
+				Array.from(document.querySelectorAll('.switchbotapi_devices_list')).map((e)=>{
+					console.log(e);
+					e.remove();
+				});
+
+				//response = await getDevicesList();
+				console.log(response.data[response.data_id]);
+				let table=document.createElement('table');
+				table.classList.add('switchbotapi_devices_list');
+				columns=['deviceName'];
+				let line=null, item=null;
+				line=document.createElement('tr');
+				for(let i=0;i<columns.length;i++){
+					item=document.createElement('th');
+					item.innerText=columns[i];
+					line.appendChild(item);
+				}
+				table.appendChild(line);
+				for(let i=0;i<response.data[response.data_id].length;i++){
+					line=document.createElement('tr');
+					item=document.createElement('td');
+					item.innerText=response.data[response.data_id][i]['deviceName'];
+					item.dataset.deviceId=response.data[response.data_id][i]['deviceId']
+					line.appendChild(item);
+					table.appendChild(line);
+				}
+
+				Array.from(document.querySelectorAll('.switchbotapi_devices')).map((e)=>{
+					console.log(e);
+					e.after(table);
+				});
 			}
 		}
 	</script>
