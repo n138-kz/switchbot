@@ -150,7 +150,7 @@ $webapp_client = new webapp_client();
 $webapp_client->result['connection']['method'] = $_SERVER['REQUEST_METHOD'];
 $webapp_client->result['connection']['client']['address'] = $_SERVER['REMOTE_ADDR'];
 
-if( ! ( substr( strtolower( $_SERVER['REQUEST_METHOD'] ), 0, 6 ) == 'option' || strtolower( $_SERVER['REQUEST_METHOD'] ) == 'get' ) ) {
+if( ! ( substr( strtolower( $_SERVER['REQUEST_METHOD'] ), 0, 6 ) == 'option' || strtolower( $_SERVER['REQUEST_METHOD'] ) == 'get' || strtolower( $_SERVER['REQUEST_METHOD'] ) == 'post' ) ) {
 	http_response_code(405);
 	$webapp_client->result['message'] = 'Method not allowed.';
 	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
@@ -233,6 +233,18 @@ if (false) {
 	$webapp_client->result['data_id'] = 'switchbot.'.$accessmode;
 	$webapp_client->result['data'] = [
 		$webapp_client->result['data_id']=>$switchbot->getScenes($token,$sign,$nonce,$t,$sceneId=null),
+	];
+	if(is_null($webapp_client->result['data'])){
+		$webapp_client->result['message'] = 'API Credential has invalid.';
+	} else {
+		$webapp_client->result['message'] = 'Getted the API data.';
+	}
+	array_multisort($webapp_client->result['data'][$webapp_client->result['data_id']]);
+	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
+} elseif (strtolower( $_SERVER['REQUEST_METHOD'] ) == 'post' && $accessmode=='scene_activate') {
+	$sceneId = isset($_POST['scene_id'])?$_POST['scene_id']:''
+	$webapp_client->result['data_id'] = 'switchbot.'.$accessmode;
+	$webapp_client->result['data'] = [
 	];
 	if(is_null($webapp_client->result['data'])){
 		$webapp_client->result['message'] = 'API Credential has invalid.';
