@@ -170,6 +170,7 @@
 			}
 		}
 		Array.from(document.querySelectorAll('.switchbotapi_devices img[src$=".svg" i]')).map((e)=>{
+			console.log(e);
 			e.addEventListener('click', async ()=>{
 				await getDevicesList();
 			})
