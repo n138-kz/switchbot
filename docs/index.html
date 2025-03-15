@@ -65,7 +65,7 @@
 			api_credential_token.value=config.api_credential.token
 			api_credential_secret.value=config.api_credential.secret
 		}
-		window.addEventListener('load', ()=>{load_api_credential()})
+		window.addEventListener('load', ()=>{load_api_credential();getDevicesList();getScenesList();})
 		function store_api_credential(caller=null) {
 			try {
 				console.log(caller.parentNode);
