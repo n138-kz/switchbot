@@ -143,7 +143,7 @@
 					item.dataset.deviceId=response.data[response.data_id][i]['deviceId']
 					item.dataset.deviceType=response.data[response.data_id][i]['deviceType']
 					item.dataset.hubDeviceId=response.data[response.data_id][i]['hubDeviceId']
-					item.dataset.version=response.data[response.data_id][i]['version']?response.data[response.data_id][i]['version']:''
+					item.dataset.version=response.data[response.data_id][i]['version']?response.data[response.data_id][i]['version']:null
 					
 					item.dataset.electricCurrent=response.data[response.data_id][i]['electricCurrent']?response.data[response.data_id][i]['electricCurrent']:null
 					item.dataset.electricityOfDay=response.data[response.data_id][i]['electricityOfDay']?response.data[response.data_id][i]['electricityOfDay']:null
@@ -152,6 +152,14 @@
 					
 					item.dataset.temperature=response.data[response.data_id][i]['temperature']?response.data[response.data_id][i]['temperature']:null
 					item.dataset.humidity=response.data[response.data_id][i]['humidity']?response.data[response.data_id][i]['humidity']:null
+
+					item.dataset.battery=response.data[response.data_id][i]['battery']?response.data[response.data_id][i]['battery']:null
+
+					item.dataset.moveDetected=response.data[response.data_id][i]['moveDetected']?response.data[response.data_id][i]['moveDetected']:null
+
+					line.appendChild(item);
+					item=document.createElement('td');
+					item.innerText=response.data[response.data_id][i]['deviceType'];
 					line.appendChild(item);
 					table.appendChild(line);
 				}
