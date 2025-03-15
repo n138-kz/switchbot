@@ -98,16 +98,26 @@
 			return enc.encode(text);
 		}
 		function genAuthnParams(token, secret) {
-			const t = Date.now();
-			const nonce = self.crypto.randomUUID();
-			const data = token + t + nonce;
-			const sign = btoa(CryptoJS.HmacSHA256(data, secret))
-			console.log(sign);
+			credential = [token, secret];
+			credential = JSON.stringify(credential);
+			credential = btoa(credential);
+			return credential;
 		}
 		async function getDevicesList() {
-			api_credential_token = document.querySelector('#api_credential_token').value
-			api_credential_secret = document.querySelector('#api_credential_secret').value
-			genAuthnParams(api_credential_token, api_credential_secret)
+			const api_credential_token = document.querySelector('#api_credential_token').value
+			const api_credential_secret = document.querySelector('#api_credential_secret').value
+			const x_token = genAuthnParams(api_credential_token, api_credential_secret)
+			let query_params = new URLSearchParams({'x-token': x_token,})
+			let api_url = 'https://api.n138.jp/switchbot/server/?'+query_params;
+
+			request = await fetch(api_url, {
+				method: 'GET',
+				mode: 'cors',
+			});
+			response = await request;
+			if(response.headers.get('content-type').split(';')[0].toLocaleLowerCase()=='application/json'){
+				response = await response.json();
+			}
 		}
 	</script>
 </head><body>
