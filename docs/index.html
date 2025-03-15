@@ -169,6 +169,11 @@
 				});
 			}
 		}
+		Array.from(document.querySelectorAll('.switchbotapi_devices img[src$=".svg" i]')).map((e)=>{
+			e.addEventListener('click', async ()=>{
+				await getDevicesList();
+			})
+		});
 	</script>
 </head><body>
 <div>
