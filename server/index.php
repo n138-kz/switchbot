@@ -1,5 +1,5 @@
 <?php
-class webapp_client(){
+class webapp_client{
     public $result=[];
 
     function __construct() {
@@ -26,7 +26,7 @@ class webapp_client(){
         return $result;
     }
 }
-class switchbot(){
+class switchbot{
     function __construct() {}
     function guidv4($data = null) {
         // Generate 16 bytes (128 bits) of random data or use the data passed into the function.
