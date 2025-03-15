@@ -160,7 +160,15 @@ if (false) {
 } elseif ($accessmode==''&&false) {
 } elseif ($accessmode=='devices_list') {
 } elseif ($accessmode=='scenes_list') {
-	$webapp_client->result['message'] = $switchbot->getScenes($token,$sign,$nonce,$t,$sceneId=null);
+	$webapp_client->result['data_id'] = 'switchbot.'.$accessmode;
+	$webapp_client->result['data'] = [
+		$webapp_client->result['data_id']=>$switchbot->getScenes($token,$sign,$nonce,$t,$sceneId=null),
+	];
+	if(is_null($webapp_client->result['data'])){
+		$webapp_client->result['message'] = 'API Credential has invalid.';
+	} else {
+		$webapp_client->result['message'] = 'Getted the API data.';
+	}
 	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
 } else {
 	$webapp_client->result['message'] = 'Unknown params accessmode: '.$accessmode;
