@@ -169,6 +169,7 @@ if (false) {
 	} else {
 		$webapp_client->result['message'] = 'Getted the API data.';
 	}
+	array_multisort($webapp_client->result['data'][$webapp_client->result['data_id']]);
 	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
 } else {
 	$webapp_client->result['message'] = 'Unknown params accessmode: '.$accessmode;
