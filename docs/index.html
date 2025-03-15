@@ -140,7 +140,7 @@
 					item=document.createElement('td');
 					item.innerText=response.data[response.data_id][i]['deviceName'];
 					item.dataset.deviceId=response.data[response.data_id][i]['deviceId']
-					item.dataset.deviceType=response.data[response.data_id][i]['deviceType']
+					item.dataset.deviceType=response.data[response.data_id][i]['deviceType']?response.data[response.data_id][i]['deviceType']:null
 					item.dataset.hubDeviceId=response.data[response.data_id][i]['hubDeviceId']
 					item.dataset.version=response.data[response.data_id][i]['version']?response.data[response.data_id][i]['version']:null
 					
@@ -158,7 +158,7 @@
 
 					line.appendChild(item);
 					item=document.createElement('td');
-					item.innerText=response.data[response.data_id][i]['deviceType'];
+					item.innerText=response.data[response.data_id][i]['deviceType']?response.data[response.data_id][i]['deviceType']:null
 					line.appendChild(item);
 					table.appendChild(line);
 				}
