@@ -200,7 +200,7 @@
 				console.log(response.data[response.data_id]);
 				let table=document.createElement('table');
 				table.classList.add('switchbotapi_scenes_list');
-				columns=['sceneName','sceneId'];
+				columns=['sceneName','exec'];
 				let line=null, item=null;
 				line=document.createElement('tr');
 				for(let i=0;i<columns.length;i++){
@@ -216,6 +216,12 @@
 					item.dataset.sceneId=response.data[response.data_id][i]['sceneId']
 
 					line.appendChild(item);
+					item[0]=document.createElement('td');
+					item[1]=document.createElement('input');
+					item[1].type='button';
+					item[1].value='**Run**';
+					item[0].appendChild(item[1]);
+					line.appendChild(item[0]);
 					table.appendChild(line);
 				}
 
