@@ -107,10 +107,12 @@
 			const api_credential_token = document.querySelector('#api_credential_token').value
 			const api_credential_secret = document.querySelector('#api_credential_secret').value
 			const x_token = genAuthnParams(api_credential_token, api_credential_secret)
-			request = await fetch($url, {
-				params: {
-					'x-token': x_token,
-				}
+			let query_params = new URLSearchParams({'x-token': x_token,})
+			let api_url = 'https://api.n138.jp/switchbot/server/?'+query_params;
+
+			request = await fetch(api_url, {
+				method: 'GET',
+				mode: 'cors',
 			});
 			response = await request;
 			if(response.headers.get('content-type').split(';').toLocaleLowerCase()=='application/json'){
