@@ -117,6 +117,7 @@
 			response = await request;
 			if(response.headers.get('content-type').split(';')[0].toLocaleLowerCase()=='application/json'){
 				response = await response.json();
+				console.log(await response);
 			}
 		}
 	</script>
