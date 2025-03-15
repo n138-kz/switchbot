@@ -141,6 +141,17 @@
 					item=document.createElement('td');
 					item.innerText=response.data[response.data_id][i]['deviceName'];
 					item.dataset.deviceId=response.data[response.data_id][i]['deviceId']
+					item.dataset.deviceType=response.data[response.data_id][i]['deviceType']
+					item.dataset.hubDeviceId=response.data[response.data_id][i]['hubDeviceId']
+					item.dataset.version=response.data[response.data_id][i]['version']?response.data[response.data_id][i]['version']:''
+					
+					item.dataset.electricCurrent=response.data[response.data_id][i]['electricCurrent']?response.data[response.data_id][i]['electricCurrent']:null
+					item.dataset.electricityOfDay=response.data[response.data_id][i]['electricityOfDay']?response.data[response.data_id][i]['electricityOfDay']:null
+					item.dataset.power=response.data[response.data_id][i]['power']?response.data[response.data_id][i]['power']:null
+					item.dataset.voltage=response.data[response.data_id][i]['voltage']?response.data[response.data_id][i]['voltage']:null
+					
+					item.dataset.temperature=response.data[response.data_id][i]['temperature']?response.data[response.data_id][i]['temperature']:null
+					item.dataset.humidity=response.data[response.data_id][i]['humidity']?response.data[response.data_id][i]['humidity']:null
 					line.appendChild(item);
 					table.appendChild(line);
 				}
@@ -168,7 +179,7 @@
 		<h2>Switchbot API Devices</h2>
 		<div class="switchbotapi switchbotapi_devices">
 			<p>Get list</p>
-			<img src="assets/icooonmono11481.svg" onclick="getDevicesList();">
+			<img src="assets/icooonmono11481.svg" onclick="await getDevicesList();">
 		</div>
 	</div>
 </div>
