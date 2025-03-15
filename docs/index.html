@@ -104,9 +104,18 @@
 			return credential;
 		}
 		async function getDevicesList() {
-			api_credential_token = document.querySelector('#api_credential_token').value
-			api_credential_secret = document.querySelector('#api_credential_secret').value
-			genAuthnParams(api_credential_token, api_credential_secret)
+			const api_credential_token = document.querySelector('#api_credential_token').value
+			const api_credential_secret = document.querySelector('#api_credential_secret').value
+			const x_token = genAuthnParams(api_credential_token, api_credential_secret)
+			request = await fetch($url, {
+				params: {
+					'x-token': x_token,
+				}
+			});
+			response = await request;
+			if(response.headers.get('content-type').split(';').toLocaleLowerCase()=='application/json'){
+				
+			}
 		}
 	</script>
 </head><body>
