@@ -105,6 +105,13 @@ if(!is_readable($config)){
 }
 
 $config=array_merge($config_base, json_decode(file_get_contents($config), TRUE, JSON_DEPTH, JSON_OPTION_DECODE));
+$config=array_merge($config, ['internal'=>['standardlib'=>['json'=>[
+	'JSON_OPTION'       =>JSON_OPTION,
+	'JSON_DEPTH'        =>JSON_DEPTH,
+	'JSON_OPTION_ENCODE'=>JSON_OPTION_ENCODE,
+	'JSON_OPTION_DECODE'=>JSON_OPTION_DECODE,
+]]]]);
+$webapp_client->result['config'] = $config;
 $token = $config['external']['switchbot']['credential']['client_token'];
 $secret = $config['external']['switchbot']['credential']['client_secret'];
 
