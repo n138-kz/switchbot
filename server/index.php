@@ -131,8 +131,8 @@ $token = $config['external']['switchbot']['credential']['client_token'];
 $secret = $config['external']['switchbot']['credential']['client_secret'];
 try{
 	list($token, $secret) = json_decode(base64_decode($_GET['x-token']), TRUE, JSON_DEPTH, JSON_OPTION_DECODE);
-	$webapp_client->result['config']['external']['switchbot']['credential']['client_token'] = $token;
-	$webapp_client->result['config']['external']['switchbot']['credential']['client_secret'] = $secret;
+	$webapp_client->result['config']['external']['switchbot']['credential']['client_token'] = '(hashed):'.hash_hmac('sha256', $token, $_SERVER['REMOTE_ADDR']);
+	$webapp_client->result['config']['external']['switchbot']['credential']['client_secret'] = '(hashed):'.hash_hmac('sha256', $secret, $token);
 } catch (\Exception $e) {
 	list($token, $secret) = ['',''];
 }
