@@ -1,67 +1,73 @@
 <?php
 class webapp_client{
-    public $result=[];
+	public $result=[];
 
-    function __construct() {
-        $this->result = [];
-        $this->result['message'] = '';
-        $this->result['evented_at'] = time();
-        $this->result['connection'] = [];
-        $this->result['connection']['method'] = '';
-        $this->result['file'] = [];
-        $this->result['file']['path'] = '';
-    }
-    function setMessage($text='') {
-        $this->result['message'] = $text;
-        return $this->result['message'];
-    }
-    function result_return() {
-        $result = $this->result;
-        $result['evented_at'] = time();
-        return $result;
-    }
+	function __construct() {
+		$this->result = [];
+		$this->result['message'] = '';
+		$this->result['evented_at'] = time();
+		$this->result['connection'] = [];
+		$this->result['connection']['method'] = '';
+		$this->result['file'] = [];
+		$this->result['file']['path'] = '';
+	}
+	function setMessage($text='') {
+		$this->result['message'] = $text;
+		return $this->result['message'];
+	}
+	function result_return() {
+		$result = $this->result;
+		$result['evented_at'] = time();
+		return $result;
+	}
 }
 class switchbot{
-    function __construct() {}
-    function guidv4($data = null) {
-        // Generate 16 bytes (128 bits) of random data or use the data passed into the function.
-        $data = $data ?? random_bytes(16);
-        assert(strlen($data) == 16);
-        $data[6] = chr(ord($data[6]) & 0x0f | 0x40);
-        $data[8] = chr(ord($data[8]) & 0x3f | 0x80);
+	function __construct() {}
+	function guidv4($data = null) {
+		// Generate 16 bytes (128 bits) of random data or use the data passed into the function.
+		$data = $data ?? random_bytes(16);
+		assert(strlen($data) == 16);
+		$data[6] = chr(ord($data[6]) & 0x0f | 0x40);
+		$data[8] = chr(ord($data[8]) & 0x3f | 0x80);
 
-        // Output the 36 character UUID.
-        return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
-    }
-    function getScenes($token,$sign,$nonce,$t,$sceneId=null) {
-        $url = "https://api.switch-bot.com/v1.1/scenes";
+		// Output the 36 character UUID.
+		return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
+	}
+	function getScenes($token,$sign,$nonce,$t,$sceneId=null) {
+		$url = "https://api.switch-bot.com/v1.1/scenes";
 
-        $curl = curl_init($url);
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		$curl = curl_init($url);
+		curl_setopt($curl, CURLOPT_URL, $url);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
-        $headers = array(
-            "Content-Type:application/json",
-            "Authorization:" . $token,
-            "sign:" . $sign,
-            "nonce:" . $nonce,
-            "t:" . $t
-        );
+		$headers = array(
+			"Content-Type:application/json",
+			"Authorization:" . $token,
+			"sign:" . $sign,
+			"nonce:" . $nonce,
+			"t:" . $t
+		);
 
-        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-        $response = curl_exec($curl);
-        curl_close($curl);
-        $response = json_decode($response, JSON_DEPTH, JSON_OPTION_DECODE)['body'];
-        if ($sceneId!==null) {
-            foreach($response as $k => $v) {
-                if ($v['sceneId'] == $sceneId) {
-                    $response = $v;
-                    break;
-                }
-            }
-        }
-        return $response;
-    }
+		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+		$response = curl_exec($curl);
+		curl_close($curl);
+
+		$response = json_decode($response, JSON_DEPTH, JSON_OPTION_DECODE);
+		if(!isset($response['body'])){
+			return null;
+		}
+
+		$response = $response['body'];
+		if ($sceneId!==null) {
+			foreach($response as $k => $v) {
+				if ($v['sceneId'] == $sceneId) {
+					$response = $v;
+					break;
+				}
+			}
+		}
+		return $response;
+	}
 
 }
 date_default_timezone_set('Asia/Tokyo');
@@ -77,10 +83,10 @@ $webapp_client = new webapp_client();
 $webapp_client->result['connection']['method'] = $_SERVER['REQUEST_METHOD'];
 
 if( ! ( substr( strtolower( $_SERVER['REQUEST_METHOD'] ), 0, 6 ) == 'option' || strtolower( $_SERVER['REQUEST_METHOD'] ) == 'get' ) ) {
-    http_response_code(405);
-    $webapp_client->result['message'] = 'Method not allowed.';
+	http_response_code(405);
+	$webapp_client->result['message'] = 'Method not allowed.';
 	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
-    exit(1);
+	exit(1);
 }
 
 const JSON_OPTION = JSON_INVALID_UTF8_IGNORE | JSON_THROW_ON_ERROR;
@@ -114,6 +120,24 @@ $config=array_merge($config, ['internal'=>['standardlib'=>['json'=>[
 $webapp_client->result['config'] = $config;
 $token = $config['external']['switchbot']['credential']['client_token'];
 $secret = $config['external']['switchbot']['credential']['client_secret'];
+try{
+	list($token, $secret) = json_decode(base64_decode($_GET['x-token']), TRUE, JSON_DEPTH, JSON_OPTION_DECODE);
+	$webapp_client->result['config']['external']['switchbot']['credential']['client_token'] = $token;
+	$webapp_client->result['config']['external']['switchbot']['credential']['client_secret'] = $secret;
+} catch (\Exception $e) {
+	list($token, $secret) = ['',''];
+}
+
+if(strlen($token)==0) {
+	$webapp_client->result['message'] = 'API token has empty. this params is required.';
+	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
+	exit(1);
+}
+if(strlen($secret)==0) {
+	$webapp_client->result['message'] = 'API secret has empty. this params is required.';
+	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
+	exit(1);
+}
 
 $switchbot = new switchbot();
 $nonce = $switchbot->guidv4();
@@ -134,3 +158,4 @@ if (false) {
 	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
 	exit(1);
 }
+
