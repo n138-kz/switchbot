@@ -8,6 +8,8 @@ class webapp_client{
 		$this->result['evented_at'] = time();
 		$this->result['connection'] = [];
 		$this->result['connection']['method'] = '';
+		$this->result['connection']['client'] = [];
+		$this->result['connection']['client']['address'] = '';
 		$this->result['file'] = [];
 		$this->result['file']['path'] = '';
 	}
@@ -86,10 +88,17 @@ const JSON_OPTION_DECODE = JSON_OPTION;
 
 $webapp_client = new webapp_client();
 $webapp_client->result['connection']['method'] = $_SERVER['REQUEST_METHOD'];
+$webapp_client->result['connection']['client']['address'] = $_SERVER['REMOTE_ADDR'];
 
 if( ! ( substr( strtolower( $_SERVER['REQUEST_METHOD'] ), 0, 6 ) == 'option' || strtolower( $_SERVER['REQUEST_METHOD'] ) == 'get' ) ) {
 	http_response_code(405);
 	$webapp_client->result['message'] = 'Method not allowed.';
+	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
+	exit(1);
+}
+if(!isset($_SERVER['REMOTE_ADDR'])){
+	http_response_code(421);
+	$webapp_client->result['message'] = '421 Misdirected Request';
 	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
 	exit(1);
 }
