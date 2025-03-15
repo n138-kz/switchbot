@@ -218,7 +218,7 @@ $sign = strtoupper(base64_encode($sign));
 $accessmode=isset($_GET['accessmode'])?$_GET['accessmode']:'scenes_list';
 if (false) {
 } elseif ($accessmode==''&&false) {
-} elseif ($accessmode=='devices_list') {
+} elseif (strtolower( $_SERVER['REQUEST_METHOD'] ) == 'get' && $accessmode=='devices_list') {
 	$webapp_client->result['data_id'] = 'switchbot.'.$accessmode;
 	$webapp_client->result['data'] = [
 		$webapp_client->result['data_id']=>$switchbot->getDevices($token,$sign,$nonce,$t,$sceneId=null),
@@ -229,7 +229,7 @@ if (false) {
 		$webapp_client->result['message'] = 'Getted the API data.';
 	}
 	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
-} elseif ($accessmode=='scenes_list') {
+} elseif (strtolower( $_SERVER['REQUEST_METHOD'] ) == 'get' && $accessmode=='scenes_list') {
 	$webapp_client->result['data_id'] = 'switchbot.'.$accessmode;
 	$webapp_client->result['data'] = [
 		$webapp_client->result['data_id']=>$switchbot->getScenes($token,$sign,$nonce,$t,$sceneId=null),
