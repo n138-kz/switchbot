@@ -70,7 +70,47 @@ class switchbot{
 		}
 		return $response;
 	}
+	function getDevices($token,$sign,$nonce,$t,$deviceId=null) {
+		$url = "https://api.switch-bot.com/v1.1/devices";
 
+		$curl = curl_init($url);
+		curl_setopt($curl, CURLOPT_URL, $url);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+		$headers = array(
+			"Content-Type:application/json",
+			"Authorization:" . $token,
+			"sign:" . $sign,
+			"nonce:" . $nonce,
+			"t:" . $t
+		);
+
+		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+		$response = curl_exec($curl);
+		curl_close($curl);
+
+		$response = json_decode($response, JSON_DEPTH, JSON_OPTION_DECODE);
+		if(!isset($response['body'])){
+			return null;
+		}
+
+		$response = $response['body'];
+		if(!isset($response['deviceList'])){
+			return null;
+		}
+
+		$response = $response['deviceList'];
+		if ($deviceId!==null) {
+			foreach($response as $k => $v) {
+				if ($v['deviceId'] == $sceneId) {
+					$response = $v;
+					break;
+				}
+			}
+		}
+
+		return $response;
+	}
 }
 date_default_timezone_set('Asia/Tokyo');
 header('Content-Type: application/json; charset=UTF-8');
@@ -159,6 +199,11 @@ $accessmode=isset($_GET['accessmode'])?$_GET['accessmode']:'scenes_list';
 if (false) {
 } elseif ($accessmode==''&&false) {
 } elseif ($accessmode=='devices_list') {
+	$webapp_client->result['data_id'] = 'switchbot.'.$accessmode;
+	$webapp_client->result['data'] = [
+		$webapp_client->result['data_id']=>$switchbot->getDevices($token,$sign,$nonce,$t,$sceneId=null),
+	];
+	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
 } elseif ($accessmode=='scenes_list') {
 	$webapp_client->result['data_id'] = 'switchbot.'.$accessmode;
 	$webapp_client->result['data'] = [
