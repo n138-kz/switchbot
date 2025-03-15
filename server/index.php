@@ -120,7 +120,8 @@ if (false) {
 } elseif ($accessmode==''&&false) {
 } elseif ($accessmode=='devices_list') {
 } elseif ($accessmode=='scenes_list') {
-    $webapp_client->result['message'] = $switchbot->getScenes($token,$sign,$nonce,$t,$sceneId=null);
+	$webapp_client->result['message'] = $switchbot->getScenes($token,$sign,$nonce,$t,$sceneId=null);
+	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
 } else {
 	$webapp_client->result['message'] = 'Unknown params accessmode: '.$accessmode;
 	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
