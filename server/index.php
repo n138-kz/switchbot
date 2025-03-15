@@ -90,7 +90,7 @@ const JSON_OPTION_DECODE = JSON_OPTION;
 
 $config_base = '{"external": {"switchbot": {"credential": {"client_token": "","client_secret": ""},"apimanuals": ["https://github.com/OpenWonderLabs/SwitchBotAPI"],"curl": {"timeout": 30}}}}';
 $config_base = json_decode($config_base, JSON_OPTION_ENCODE);
-$webapp_client->result['file']['path'] = $config = __DIR__.'/.secret/config.json';
+$webapp_client->result['file']['path'] = $config = __DIR__.'/..'.'/.secret/config.json';
 if(!file_exists($config)){
 	$webapp_client->result['message'] = 'Config file does not exist.';
 	$webapp_client->result['config'] = $config_base;
