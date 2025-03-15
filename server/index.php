@@ -117,12 +117,12 @@ $data = utf8_encode($token . $t . $nonce);
 $sign = hash_hmac('sha256', $data, $secret,true);
 $sign = strtoupper(base64_encode($sign));
 
-$accessmode=isset($_GET['accessmode'])?$_GET['accessmode']:'scenes_list'
+$accessmode=isset($_GET['accessmode'])?$_GET['accessmode']:'scenes_list';
 if (false) {
 } elseif ($accessmode==''&&false) {
 } elseif ($accessmode=='devices_list') {
 } elseif ($accessmode=='scenes_list') {
-    $webapp_client->result['message'] = $switchbot->getScenes($token,$sign,$nonce,$t,$sceneId=null)
+    $webapp_client->result['message'] = $switchbot->getScenes($token,$sign,$nonce,$t,$sceneId=null);
 } else {
 	$webapp_client->result['message'] = 'Unknown params accessmode: '.$accessmode;
 	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
