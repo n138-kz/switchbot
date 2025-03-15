@@ -78,6 +78,7 @@
 					}
 				})
 				localStorage.setItem( (btoa(location.href)).slice(0, 16) + '.' + 'api_credential', config );
+				syncStorage(localStorage,sessionStorage);
 
 				result = document.createElement('div')
 				result.innerText = 'Credential cached'
