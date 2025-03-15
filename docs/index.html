@@ -200,15 +200,7 @@
 				console.log(response.data[response.data_id]);
 				let table=document.createElement('table');
 				table.classList.add('switchbotapi_scenes_list');
-				columns=['sceneName','exec'];
 				let line=null, item=null;
-				line=document.createElement('tr');
-				for(let i=0;i<columns.length;i++){
-					item=document.createElement('th');
-					item.innerText=columns[i];
-					line.appendChild(item);
-				}
-				table.appendChild(line);
 				for(let i=0;i<response.data[response.data_id].length;i++){
 					line=document.createElement('tr');
 					item=document.createElement('td');
@@ -246,17 +238,11 @@
 	</div>
 	<div>
 		<h2>Switchbot Devices</h2>
-		<div class="switchbotapi switchbotapi_devices">
-			<p>Get list</p>
-			<img src="assets/icooonmono11481.svg">
-		</div>
+		<div class="switchbotapi switchbotapi_devices"></div>
 	</div>
 	<div>
 		<h2>Switchbot Scenes</h2>
-		<div class="switchbotapi switchbotapi_scenes">
-			<p>Get list</p>
-			<img src="assets/icooonmono11481.svg">
-		</div>
+		<div class="switchbotapi switchbotapi_scenes"></div>
 	</div>
 </div>
 </body>
