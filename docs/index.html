@@ -248,8 +248,7 @@
 				console.log(response);
 
 				if(response.message.substr(0,6).toLocaleLowerCase()=='getted'){
-					console.log(output);
-					
+					output.innerText='Activated: '+response.data_id+' at '+(new Date).toLocaleString()
 				}
 			}
 		}
