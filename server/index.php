@@ -261,7 +261,7 @@ if (false) {
 	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
 } elseif (strtolower( $_SERVER['REQUEST_METHOD'] ) == 'post' && $accessmode=='scene_activate') {
 	$sceneId = isset($_POST['scene_id'])?$_POST['scene_id']:''
-	if(is_empty($sceneId)){
+	if($sceneId){
 		$webapp_client->result['message'] = 'API scene_id has empty. this params is required.';
 		echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
 		exit(1);
