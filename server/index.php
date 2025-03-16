@@ -36,12 +36,6 @@ class switchbot{
 		return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
 	}
 	function getScenes($token,$sign,$nonce,$t,$sceneId=null) {
-		$url = "https://api.switch-bot.com/v1.1/scenes";
-
-		$curl = curl_init($url);
-		curl_setopt($curl, CURLOPT_URL, $url);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-
 		$headers = array(
 			"Content-Type:application/json",
 			"Authorization:" . $token,
@@ -50,6 +44,11 @@ class switchbot{
 			"t:" . $t
 		);
 
+		$url = "https://api.switch-bot.com/v1.1/scenes";
+
+		$curl = curl_init($url);
+		curl_setopt($curl, CURLOPT_URL, $url);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 		$response = curl_exec($curl);
 		curl_close($curl);
@@ -140,6 +139,7 @@ class switchbot{
 			"t:" . $t
 		);
 
+		$url = "https://api.switch-bot.com/v1.1/scenes/${sceneId}/execute";
 	}
 }
 date_default_timezone_set('Asia/Tokyo');
