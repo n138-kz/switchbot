@@ -232,7 +232,7 @@
 			let api_url = 'https://api.n138.jp/switchbot/server/?'+query_params;
 
 			request = await fetch(api_url, {
-				method: 'GET',
+				method: 'POST',
 				mode: 'cors',
 				data: {
 					scene_id: scene_id,
