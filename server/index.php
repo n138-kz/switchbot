@@ -131,7 +131,7 @@ class switchbot{
 			return $response;
 		}
 	}
-	function runScene($token,$sign,$nonce,$t,$deviceId=null) {
+	function runScene($token,$sign,$nonce,$t,$sceneId=null) {
 	}
 }
 date_default_timezone_set('Asia/Tokyo');
