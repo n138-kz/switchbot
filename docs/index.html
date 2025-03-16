@@ -231,12 +231,13 @@
 			let query_params = new URLSearchParams({'x-token': x_token,accessmode:'scene_activate',})
 			let api_url = 'https://api.n138.jp/switchbot/server/?'+query_params;
 
+			request = new FormData();
+			request.append('scene_id', scene_id);
+			
 			request = await fetch(api_url, {
 				method: 'POST',
 				mode: 'cors',
-				data: {
-					scene_id: scene_id,
-				}
+				body: request,
 			});
 			response = await request;
 			console.log(response);
