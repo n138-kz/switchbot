@@ -132,6 +132,14 @@ class switchbot{
 		}
 	}
 	function runScene($token,$sign,$nonce,$t,$sceneId=null) {
+		$headers = array(
+			"Content-Type:application/json",
+			"Authorization:" . $token,
+			"sign:" . $sign,
+			"nonce:" . $nonce,
+			"t:" . $t
+		);
+
 	}
 }
 date_default_timezone_set('Asia/Tokyo');
