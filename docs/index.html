@@ -242,6 +242,7 @@
 			console.log(response);
 			if(response.headers.get('content-type').split(';')[0].toLocaleLowerCase()=='application/json'){
 				response = await response.json();
+				console.log(response);
 			}
 		}
 	</script>
