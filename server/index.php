@@ -347,6 +347,7 @@ if (false) {
 		$webapp_client->result['data_id']=>$switchbot->getDevices($token,$sign,$nonce,$t,$sceneId=null),
 	];
 	if(is_null($webapp_client->result['data'])){
+		http_response_code(400);
 		$webapp_client->result['message'] = 'API Credential has invalid.';
 	} else {
 		$webapp_client->result['message'] = 'Getted the API data.';
@@ -358,6 +359,7 @@ if (false) {
 		$webapp_client->result['data_id']=>$switchbot->getScenes($token,$sign,$nonce,$t,$sceneId=null),
 	];
 	if(is_null($webapp_client->result['data'])){
+		http_response_code(400);
 		$webapp_client->result['message'] = 'API Credential has invalid.';
 	} else {
 		$webapp_client->result['message'] = 'Getted the API data.';
@@ -367,6 +369,7 @@ if (false) {
 } elseif (strtolower( $_SERVER['REQUEST_METHOD'] ) == 'post' && $accessmode=='scene_activate') {
 	$sceneId = isset($_POST['scene_id'])?$_POST['scene_id']:'';
 	if(!$sceneId){
+		http_response_code(400);
 		$webapp_client->result['message'] = 'API scene_id has empty. this params is required.';
 		echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
 		exit(1);
@@ -376,12 +379,14 @@ if (false) {
 		$webapp_client->result['data_id']=>$switchbot->runScene($token,$sign,$nonce,$t,$sceneId),
 	];
 	if(is_null($webapp_client->result['data'])){
+		http_response_code(400);
 		$webapp_client->result['message'] = 'API Credential has invalid.';
 	} else {
 		$webapp_client->result['message'] = 'Getted the API data.';
 	}
 	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
 } else {
+	http_response_code(400);
 	$webapp_client->result['message'] = 'Unknown params accessmode: '.$accessmode;
 	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
 	exit(1);
