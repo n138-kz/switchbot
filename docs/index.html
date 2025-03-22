@@ -47,6 +47,11 @@
 		}
 	</style>
 	<script>
+		if (!!location.protocol.match(/https?:/) && location.origin!='https://n138-kz.github.io') {
+			location.replace('https://n138-kz.github.io/switchbot/');
+		}
+	</script>
+	<script>
 		window.addEventListener('DOMContentLoaded', ()=>{
 			init_setTopMaker()
 			init_setFavicon()
