@@ -294,9 +294,6 @@ $result=$discord_client->pushMessage(
 		],
 	], JSON_OPTION_ENCODE|JSON_PRETTY_PRINT).PHP_EOL.'```', ['title'=>'Request', 'url'=>$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']]
 );
-error_log(json_encode($result));
-file_put_contents('request.json', json_encode($discord_client->getLatestLog('request'), JSON_OPTION_ENCODE));
-file_put_contents('result.json', json_encode($discord_client->getLatestLog('result'), JSON_OPTION_ENCODE));
 $webapp_client->result['discord_webhook_event'] = [
 	'request'=>$discord_client->getLatestLog('request'),
 	'request.header'=>$discord_client->getLatestLog('request_header'),
