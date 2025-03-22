@@ -23,6 +23,79 @@ class webapp_client{
 		return $result;
 	}
 }
+class discord{
+	public $webhook_url='';
+	public $avatar_url='';
+	public $webhook_name='';
+	public $embed_color='FFFFFF';
+	public $header=[];
+	private $latest_log_request=[];
+	private $latest_log_result=[];
+	private $latest_log_result_error=[];
+	private $latest_log_result_header=[];
+
+	function __construct($url='', $header=['Content-Type: multipart/form-data']) {
+		$this->webhook_url=$url;
+		$this->headers=$header;
+		return null;
+	}
+	function pushMessage($text='', $option=['title'=>'','url'=>'']){
+		$curl=curl_init($this->webhook_url);
+		curl_setopt($curl, CURLOPT_POST, TRUE);
+		curl_setopt($curl, CURLOPT_HTTPHEADER, $this->headers);
+		$data=[];
+		$data['username']=$this->webhook_name;
+		$data['avater_url']=$this->avatar_url;
+		$data['embeds']=[];
+		$data['embeds'][count($data['embeds'])]=[
+			'title'=>$option['title'],
+			'description'=>$text,
+			'url'=>$option['url'],
+			'timestamp'=>date('c'),
+			'color'=>hexdec($this->embed_color),
+		];
+		curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE);
+		$result=curl_exec($curl);
+		$result=json_decode($result, TRUE);
+		$error=curl_error($curl);
+		$info=curl_getinfo($curl);
+		$result=($result=='')?null:$result;
+		$error=($error=='')?null:$error;
+
+		$this->latest_log_request=$data;
+		$this->latest_log_result=$result;
+		$this->latest_log_result_error=$error;
+		$this->latest_log_result_header=$info;
+
+		return [
+			'result'=>$result,
+			'errors'=>[
+				'code'=>curl_errno($curl),
+				'details'=>$error,
+			],
+			'response_header'=>$info,
+		];
+	}
+	function getLatestLog($item=null){
+		if(false){
+		}elseif(false){
+		}elseif($item=='request'){
+			return $this->latest_log_request;
+		}elseif($item=='request_header'){
+			return $this->headers;
+		}elseif($item=='result'){
+			return $this->latest_log_result;
+		}elseif($item=='result_error'){
+			return $this->latest_log_result_error;
+		}elseif($item=='result_header'){
+			return $this->latest_log_result_header;
+		}else{
+			return null;
+		}
+	}
+}
 class switchbot{
 	function __construct() {}
 	function guidv4($data = null) {
@@ -204,6 +277,25 @@ $config=array_merge($config, ['internal'=>['standardlib'=>['json'=>[
 	'JSON_OPTION_ENCODE'=>JSON_OPTION_ENCODE,
 	'JSON_OPTION_DECODE'=>JSON_OPTION_DECODE,
 ]]]]);
+
+$discord_client=new discord($config['external']['discord']['webhook']['notice']['url'].'?wait=true', ['Content-Type: application/json']);
+$discord_client->avatar_url=$config['external']['discord']['webhook']['notice']['avatar'];
+$discord_client->webhook_name=$config['external']['discord']['webhook']['notice']['username'];
+$discord_client->embed_color=$config['external']['discord']['webhook']['notice']['color'];
+$result=$discord_client->pushMessage(
+	'```'.PHP_EOL.json_encode(['g'=>$_GET,'p'=>$_POST], JSON_OPTION_ENCODE).PHP_EOL.'```', ['title'=>'Request', 'url'=>$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']]
+);
+error_log(json_encode($result));
+file_put_contents('request.json', json_encode($discord_client->getLatestLog('request'), JSON_OPTION_ENCODE));
+file_put_contents('result.json', json_encode($discord_client->getLatestLog('result'), JSON_OPTION_ENCODE));
+$webapp_client->result['discord_webhook_event'] = [
+	'request'=>$discord_client->getLatestLog('request'),
+	'request.header'=>$discord_client->getLatestLog('request_header'),
+	'result'=>$discord_client->getLatestLog('result'),
+	'result.error'=>$discord_client->getLatestLog('result_error'),
+	'result.header'=>$discord_client->getLatestLog('result_header'),
+];
+
 $webapp_client->result['config'] = $config;
 $token = $config['external']['switchbot']['credential']['client_token'];
 $secret = $config['external']['switchbot']['credential']['client_secret'];
