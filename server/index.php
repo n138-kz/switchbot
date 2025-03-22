@@ -325,6 +325,10 @@ $data = utf8_encode($token . $t . $nonce);
 $sign = hash_hmac('sha256', $data, $secret,true);
 $sign = strtoupper(base64_encode($sign));
 
+$webapp_client->result['config']=null;
+$webapp_client->result['file']=null;
+$webapp_client->result['discord_webhook_event']=null;
+
 $accessmode=isset($_GET['accessmode'])?$_GET['accessmode']:'scenes_list';
 if (false) {
 } elseif ($accessmode==''&&false) {
