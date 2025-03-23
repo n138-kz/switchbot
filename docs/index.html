@@ -248,6 +248,7 @@
 				console.log(response);
 
 				if(response.message.substr(0,6).toLocaleLowerCase()=='getted'){
+					output.dataset.queryUrl = api_url;
 					output.innerText='Activated at '+(new Date).toLocaleString()
 				}
 			}
