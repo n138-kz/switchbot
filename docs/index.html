@@ -135,7 +135,7 @@
 				line=document.createElement('tr');
 				for(let i=0;i<columns.length;i++){
 					item=document.createElement('th');
-					item.innerText=columns[i];
+					item.innerHTML=columns[i];
 					line.appendChild(item);
 				}
 				table.appendChild(line);
@@ -146,7 +146,7 @@
 
 					line=document.createElement('tr');
 					item=document.createElement('td');
-					item.innerText=response.data[response.data_id][i]['deviceName'];
+					item.innerHTML=response.data[response.data_id][i]['deviceName'];
 					item.dataset.deviceId=response.data[response.data_id][i]['deviceId'];
 					item.dataset.deviceType=response.data[response.data_id][i]['deviceType']?response.data[response.data_id][i]['deviceType']:null;
 					item.dataset.hubDeviceId=response.data[response.data_id][i]['hubDeviceId'];
@@ -180,7 +180,7 @@
 							item.innerHTML+=String(response.data[response.data_id][i]['power']).length?` [${response.data[response.data_id][i]['power']}]`:''
 							item.innerHTML+=String(response.data[response.data_id][i]['voltage']).length?` ${response.data[response.data_id][i]['voltage']}[V]`:''
 							if (String(response.data[response.data_id][i]['voltage']).length&&String(response.data[response.data_id][i]['weight']).length) {
-								item.innerText+=response.data[response.data_id][i]['weight']>0?` ${Math.round(response.data[response.data_id][i]['weight']/response.data[response.data_id][i]['voltage']*10)/10}[A]`:item.innerText+=` 0.0[A]`
+								item.innerHTML+=response.data[response.data_id][i]['weight']>0?` ${Math.round(response.data[response.data_id][i]['weight']/response.data[response.data_id][i]['voltage']*10)/10}[A]`:item.innerHTML+=` 0.0[A]`
 							}
 							item.innerHTML+=String(response.data[response.data_id][i]['weight']).length?` ${response.data[response.data_id][i]['weight']}[W]`:''
 						} else if (response.data[response.data_id][i]['deviceType']&&response.data[response.data_id][i]['deviceType'].toLowerCase().substr(0,5)=='meter') {
