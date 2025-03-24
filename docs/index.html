@@ -130,7 +130,7 @@
 				console.log(response.data[response.data_id]);
 				let table=document.createElement('table');
 				table.classList.add('switchbotapi_devices_list');
-				columns=['deviceName','deviceType'];
+				columns=['deviceName','deviceType', 'voltage'];
 				let line=null, item=null;
 				line=document.createElement('tr');
 				for(let i=0;i<columns.length;i++){
@@ -163,6 +163,12 @@
 					line.appendChild(item);
 					item=document.createElement('td');
 					item.innerText=response.data[response.data_id][i]['deviceType']?response.data[response.data_id][i]['deviceType']:null
+					line.appendChild(item);
+					item=document.createElement('td');
+					item.innerText=response.data[response.data_id][i]['power']?`[${response.data[response.data_id][i]['power']}]`:null
+					item.innerText+=response.data[response.data_id][i]['voltage']?`${response.data[response.data_id][i]['voltage']}[V]`:null
+					item.innerText+=response.data[response.data_id][i]['weight']?`${response.data[response.data_id][i]['weight']}[W]`:null
+					item.innerText=item.innerText.trim()
 					line.appendChild(item);
 					table.appendChild(line);
 				}
