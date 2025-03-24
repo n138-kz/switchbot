@@ -167,39 +167,39 @@
 					response.data[response.data_id][i]['deviceType']=response.data[response.data_id][i]['deviceType']?response.data[response.data_id][i]['deviceType']:null
 					line.appendChild(item);
 					item=document.createElement('td');
-					item.innerText=''
+					item.innerHTML=''
 					console.debug({
 						'plug-mini': response.data[response.data_id][i]['deviceType'],
 					})
 					try {
 						if (false) {
 						} else if (response.data[response.data_id][i]['deviceType']&&response.data[response.data_id][i]['deviceType'].toLowerCase().substr(0,9)=='plug mini') {
-							item.innerText+='<img src="assets/icooonmono16097.svg" style="1em">'
-							item.innerText+=String(response.data[response.data_id][i]['power']).length?` [${response.data[response.data_id][i]['power']}]`:''
-							item.innerText+=String(response.data[response.data_id][i]['voltage']).length?` ${response.data[response.data_id][i]['voltage']}[V]`:''
+							item.innerHTML+='<img src="assets/icooonmono16097.svg" style="1em">'
+							item.innerHTML+=String(response.data[response.data_id][i]['power']).length?` [${response.data[response.data_id][i]['power']}]`:''
+							item.innerHTML+=String(response.data[response.data_id][i]['voltage']).length?` ${response.data[response.data_id][i]['voltage']}[V]`:''
 							if (String(response.data[response.data_id][i]['voltage']).length&&String(response.data[response.data_id][i]['weight']).length) {
 								item.innerText+=response.data[response.data_id][i]['weight']>0?` ${Math.round(response.data[response.data_id][i]['weight']/response.data[response.data_id][i]['voltage']*10)/10}[A]`:item.innerText+=` 0.0[A]`
 							}
-							item.innerText+=String(response.data[response.data_id][i]['weight']).length?` ${response.data[response.data_id][i]['weight']}[W]`:''
+							item.innerHTML+=String(response.data[response.data_id][i]['weight']).length?` ${response.data[response.data_id][i]['weight']}[W]`:''
 						} else if (response.data[response.data_id][i]['deviceType']&&response.data[response.data_id][i]['deviceType'].toLowerCase().substr(0,5)=='meter') {
-							item.innerText+='<img src="assets/icooonmono11307.svg" style="1em">'
-							item.innerText+=response.data[response.data_id][i]['temperature']?` ${response.data[response.data_id][i]['temperature']}[℃]`:` null[℃]`
-							item.innerText+=response.data[response.data_id][i]['battery']?` ${response.data[response.data_id][i]['battery']}[%]`:` 0[%]`
+							item.innerHTML+='<img src="assets/icooonmono11307.svg" style="1em">'
+							item.innerHTML+=response.data[response.data_id][i]['temperature']?` ${response.data[response.data_id][i]['temperature']}[℃]`:` null[℃]`
+							item.innerHTML+=response.data[response.data_id][i]['battery']?` ${response.data[response.data_id][i]['battery']}[%]`:` 0[%]`
 						} else if (response.data[response.data_id][i]['deviceType']&&response.data[response.data_id][i]['deviceType'].toLowerCase().substr(0,10)=='woiosensor') {
-							item.innerText+='<img src="assets/icooonmono11307.svg" style="1em">'
-							item.innerText+=response.data[response.data_id][i]['temperature']?` ${response.data[response.data_id][i]['temperature']}[℃]`:` null[℃]`
-							item.innerText+=response.data[response.data_id][i]['battery']?` ${response.data[response.data_id][i]['battery']}[%]`:` 0[%]`
+							item.innerHTML+='<img src="assets/icooonmono11307.svg" style="1em">'
+							item.innerHTML+=response.data[response.data_id][i]['temperature']?` ${response.data[response.data_id][i]['temperature']}[℃]`:` null[℃]`
+							item.innerHTML+=response.data[response.data_id][i]['battery']?` ${response.data[response.data_id][i]['battery']}[%]`:` 0[%]`
 						} else {}
 
 						if (false) {
 						} else if (response.data[response.data_id][i]['battery']&&String(response.data[response.data_id][i]['battery']).length) {
-							item.innerText+='<img src="assets/icooonmono00063.svg" style="1em">'
-							item.innerText+=response.data[response.data_id][i]['battery']?` ${response.data[response.data_id][i]['battery']}[%]`:` 0[%]`
+							item.innerHTML+='<img src="assets/icooonmono00063.svg" style="1em">'
+							item.innerHTML+=response.data[response.data_id][i]['battery']?` ${response.data[response.data_id][i]['battery']}[%]`:` 0[%]`
 						} else {}
 					} catch (error) {
 						console.error(error);
 					}
-					item.innerText=item.innerText.trim()
+					item.innerText=item.innerHTML.trim()
 					line.appendChild(item);
 					table.appendChild(line);
 				}
