@@ -174,7 +174,7 @@
 					try {
 						if (false) {
 						} else if (response.data[response.data_id][i]['deviceType']&&response.data[response.data_id][i]['deviceType'].toLowerCase().substr(0,9)=='plug mini') {
-							item.innerHTML+='<img src="assets/icooonmono16097.svg" style="1em">'
+							item.innerHTML+='<img src="assets/icooonmono16097.svg" style="max-height:1em">'
 							item.innerHTML+=String(response.data[response.data_id][i]['power']).length?` [${response.data[response.data_id][i]['power']}]`:''
 							item.innerHTML+=String(response.data[response.data_id][i]['voltage']).length?` ${response.data[response.data_id][i]['voltage']}[V]`:''
 							if (String(response.data[response.data_id][i]['voltage']).length&&String(response.data[response.data_id][i]['weight']).length) {
@@ -182,18 +182,18 @@
 							}
 							item.innerHTML+=String(response.data[response.data_id][i]['weight']).length?` ${response.data[response.data_id][i]['weight']}[W]`:''
 						} else if (response.data[response.data_id][i]['deviceType']&&response.data[response.data_id][i]['deviceType'].toLowerCase().substr(0,5)=='meter') {
-							item.innerHTML+='<img src="assets/icooonmono11307.svg" style="1em">'
+							item.innerHTML+='<img src="assets/icooonmono11307.svg" style="max-height:1em">'
 							item.innerHTML+=response.data[response.data_id][i]['temperature']?` ${response.data[response.data_id][i]['temperature']}[℃]`:` null[℃]`
 							item.innerHTML+=response.data[response.data_id][i]['battery']?` ${response.data[response.data_id][i]['battery']}[%]`:` 0[%]`
 						} else if (response.data[response.data_id][i]['deviceType']&&response.data[response.data_id][i]['deviceType'].toLowerCase().substr(0,10)=='woiosensor') {
-							item.innerHTML+='<img src="assets/icooonmono11307.svg" style="1em">'
+							item.innerHTML+='<img src="assets/icooonmono11307.svg" style="max-height:1em">'
 							item.innerHTML+=response.data[response.data_id][i]['temperature']?` ${response.data[response.data_id][i]['temperature']}[℃]`:` null[℃]`
 							item.innerHTML+=response.data[response.data_id][i]['battery']?` ${response.data[response.data_id][i]['battery']}[%]`:` 0[%]`
 						} else {}
 
 						if (false) {
 						} else if (response.data[response.data_id][i]['battery']&&String(response.data[response.data_id][i]['battery']).length) {
-							item.innerHTML+='<img src="assets/icooonmono00063.svg" style="1em">'
+							item.innerHTML+='<img src="assets/icooonmono00063.svg" style="max-height:1em">'
 							item.innerHTML+=response.data[response.data_id][i]['battery']?` ${response.data[response.data_id][i]['battery']}[%]`:` 0[%]`
 						} else {}
 					} catch (error) {
