@@ -166,7 +166,7 @@
 
 					line.appendChild(item);
 					item=document.createElement('td');
-					response.data[response.data_id][i]['deviceType']=response.data[response.data_id][i]['deviceType']?response.data[response.data_id][i]['deviceType']:null
+					item.innerHTML=response.data[response.data_id][i]['deviceType']?response.data[response.data_id][i]['deviceType']:null
 					line.appendChild(item);
 					item=document.createElement('td');
 					item.innerHTML=''
