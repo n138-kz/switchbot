@@ -187,12 +187,12 @@
 							item.innerHTML+='<img src="assets/icooonmono11307.svg" style="max-height:1em">'
 							item.innerHTML+=response.data[response.data_id][i]['temperature']?` ${response.data[response.data_id][i]['temperature']}[℃]`:` null[℃]`
 							item.innerHTML+='<img src="assets/icooonmono11307.svg" style="max-height:1em">'
-							item.innerHTML+=response.data[response.data_id][i]['battery']?` ${response.data[response.data_id][i]['battery']}[%]`:` 0[%]`
+							item.innerHTML+=response.data[response.data_id][i]['humidity']?` ${response.data[response.data_id][i]['humidity']}[%]`:` 0[%]`
 						} else if (response.data[response.data_id][i]['deviceType']&&response.data[response.data_id][i]['deviceType'].toLowerCase().substr(0,10)=='woiosensor') {
 							item.innerHTML+='<img src="assets/icooonmono11307.svg" style="max-height:1em">'
 							item.innerHTML+=response.data[response.data_id][i]['temperature']?` ${response.data[response.data_id][i]['temperature']}[℃]`:` null[℃]`
 							item.innerHTML+='<img src="assets/icooonmono11307.svg" style="max-height:1em">'
-							item.innerHTML+=response.data[response.data_id][i]['battery']?` ${response.data[response.data_id][i]['battery']}[%]`:` 0[%]`
+							item.innerHTML+=response.data[response.data_id][i]['humidity']?` ${response.data[response.data_id][i]['humidity']}[%]`:` 0[%]`
 						} else {}
 
 						if (false) {
