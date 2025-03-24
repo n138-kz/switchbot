@@ -147,10 +147,10 @@
 					line=document.createElement('tr');
 					item=document.createElement('td');
 					item.innerText=response.data[response.data_id][i]['deviceName'];
-					item.dataset.deviceId=response.data[response.data_id][i]['deviceId']
-					item.dataset.deviceType=response.data[response.data_id][i]['deviceType']?response.data[response.data_id][i]['deviceType']:null
-					item.dataset.hubDeviceId=response.data[response.data_id][i]['hubDeviceId']
-					item.dataset.version=response.data[response.data_id][i]['version']?response.data[response.data_id][i]['version']:null
+					item.dataset.deviceId=response.data[response.data_id][i]['deviceId'];
+					item.dataset.deviceType=response.data[response.data_id][i]['deviceType']?response.data[response.data_id][i]['deviceType']:null;
+					item.dataset.hubDeviceId=response.data[response.data_id][i]['hubDeviceId'];
+					item.dataset.version=response.data[response.data_id][i]['version']?response.data[response.data_id][i]['version']:null;
 					
 					item.dataset.electricCurrent=response.data[response.data_id][i]['electricCurrent']?response.data[response.data_id][i]['electricCurrent']:null
 					item.dataset.electricityOfDay=response.data[response.data_id][i]['electricityOfDay']?response.data[response.data_id][i]['electricityOfDay']:null
