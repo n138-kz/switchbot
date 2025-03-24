@@ -183,6 +183,11 @@
 							item.innerText+=String(response.data[response.data_id][i]['weight']).length?` ${response.data[response.data_id][i]['weight']}[W]`:''
 						} else {}
 
+						if (false) {
+						} else if (response.data[response.data_id][i]['battery']&&String(response.data[response.data_id][i]['battery']).length) {
+							item.innerText+='<img src="assets/icooonmono00063.svg" style="1em">'
+							item.innerText+=response.data[response.data_id][i]['battery']?` ${response.data[response.data_id][i]['battery']}[%]`:` 0[%]`
+						} else {}
 					} catch (error) {
 						console.error(error);
 					}
