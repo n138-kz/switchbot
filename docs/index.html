@@ -172,7 +172,7 @@
 						'plug-mini': response.data[response.data_id][i]['deviceType'],
 					})
 					try {
-						if(response.data[response.data_id][i]['deviceType'].substr(0,9)=='plug mini'){
+						if(response.data[response.data_id][i]['deviceType']&&response.data[response.data_id][i]['deviceType'].substr(0,9)=='plug mini'){
 							item.innerText+=String(response.data[response.data_id][i]['power']).length?` [${response.data[response.data_id][i]['power']}]`:''
 							item.innerText+=String(response.data[response.data_id][i]['voltage']).length?` ${response.data[response.data_id][i]['voltage']}[V]`:''
 							if (String(response.data[response.data_id][i]['voltage']).length&&String(response.data[response.data_id][i]['weight']).length) {
