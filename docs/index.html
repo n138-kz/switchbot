@@ -173,8 +173,7 @@
 							item.innerText+=' '+String(response.data[response.data_id][i]['power']).length?`[${response.data[response.data_id][i]['power']}]`:''
 							item.innerText+=' '+String(response.data[response.data_id][i]['voltage']).length?`${response.data[response.data_id][i]['voltage']}[V]`:''
 							item.innerText+=' '+String(response.data[response.data_id][i]['weight']).length?`${response.data[response.data_id][i]['weight']}[W]`:''
-						} catch (error) {
-						}
+						} catch (error) {}
 					}else{
 						item.innerText+=''
 					}
