@@ -185,6 +185,10 @@
 							item.innerText+='<img src="assets/icooonmono11307.svg" style="1em">'
 							item.innerText+=response.data[response.data_id][i]['temperature']?` ${response.data[response.data_id][i]['temperature']}[℃]`:` null[℃]`
 							item.innerText+=response.data[response.data_id][i]['battery']?` ${response.data[response.data_id][i]['battery']}[%]`:` 0[%]`
+						} else if (response.data[response.data_id][i]['deviceType']&&response.data[response.data_id][i]['deviceType'].toLowerCase().substr(0,10)=='woiosensor') {
+							item.innerText+='<img src="assets/icooonmono11307.svg" style="1em">'
+							item.innerText+=response.data[response.data_id][i]['temperature']?` ${response.data[response.data_id][i]['temperature']}[℃]`:` null[℃]`
+							item.innerText+=response.data[response.data_id][i]['battery']?` ${response.data[response.data_id][i]['battery']}[%]`:` 0[%]`
 						} else {}
 
 						if (false) {
