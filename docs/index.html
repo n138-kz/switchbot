@@ -172,7 +172,8 @@
 						'plug-mini': response.data[response.data_id][i]['deviceType'],
 					})
 					try {
-						if(response.data[response.data_id][i]['deviceType']&&response.data[response.data_id][i]['deviceType'].toLowerCase().substr(0,9)=='plug mini'){
+						if (false) {
+						} else if(response.data[response.data_id][i]['deviceType']&&response.data[response.data_id][i]['deviceType'].toLowerCase().substr(0,9)=='plug mini'){
 							item.innerText+='<img src="assets/icooonmono16097.svg" style="1em">'
 							item.innerText+=String(response.data[response.data_id][i]['power']).length?` [${response.data[response.data_id][i]['power']}]`:''
 							item.innerText+=String(response.data[response.data_id][i]['voltage']).length?` ${response.data[response.data_id][i]['voltage']}[V]`:''
