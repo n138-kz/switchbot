@@ -173,9 +173,9 @@
 					})
 					if(response.data[response.data_id][i]['deviceType'].substr(0,9)=='plug mini'){
 						try {
-							item.innerText+=' '+String(response.data[response.data_id][i]['power']).length?`[${response.data[response.data_id][i]['power']}]`:''
-							item.innerText+=' '+String(response.data[response.data_id][i]['voltage']).length?`${response.data[response.data_id][i]['voltage']}[V]`:''
-							item.innerText+=' '+String(response.data[response.data_id][i]['weight']).length?`${response.data[response.data_id][i]['weight']}[W]`:''
+							item.innerText+=String(response.data[response.data_id][i]['power']).length?` [${response.data[response.data_id][i]['power']}]`:''
+							item.innerText+=String(response.data[response.data_id][i]['voltage']).length?` ${response.data[response.data_id][i]['voltage']}[V]`:''
+							item.innerText+=String(response.data[response.data_id][i]['weight']).length?` ${response.data[response.data_id][i]['weight']}[W]`:''
 						} catch (error) {
 							console.error(error);
 						}
