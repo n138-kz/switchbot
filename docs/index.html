@@ -140,6 +140,8 @@
 				}
 				table.appendChild(line);
 				for(let i=0;i<response.data[response.data_id].length;i++){
+					response.data[response.data_id][i]['deviceType']=response.data[response.data_id][i]['deviceType']?response.data[response.data_id][i]['deviceType']:null
+
 					line=document.createElement('tr');
 					item=document.createElement('td');
 					item.innerText=response.data[response.data_id][i]['deviceName'];
@@ -165,9 +167,13 @@
 					item.innerText=response.data[response.data_id][i]['deviceType']?response.data[response.data_id][i]['deviceType']:null
 					line.appendChild(item);
 					item=document.createElement('td');
-					item.innerText=String(response.data[response.data_id][i]['power']).length?`[${response.data[response.data_id][i]['power']}]`:''
-					item.innerText+=String(response.data[response.data_id][i]['voltage']).length?`${response.data[response.data_id][i]['voltage']}[V]`:''
-					item.innerText+=String(response.data[response.data_id][i]['weight']).length?`${response.data[response.data_id][i]['weight']}[W]`:''
+					if(response.data[response.data_id][i]['deviceType'].substr(0,6)=='Plug Mini'){
+						item.innerText=String(response.data[response.data_id][i]['power']).length?`[${response.data[response.data_id][i]['power']}]`:''
+						item.innerText+=String(response.data[response.data_id][i]['voltage']).length?`${response.data[response.data_id][i]['voltage']}[V]`:''
+						item.innerText+=String(response.data[response.data_id][i]['weight']).length?`${response.data[response.data_id][i]['weight']}[W]`:''
+					}else{
+						item.innerText=''
+					}
 					item.innerText=item.innerText.trim()
 					line.appendChild(item);
 					table.appendChild(line);
