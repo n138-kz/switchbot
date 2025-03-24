@@ -173,12 +173,12 @@
 					})
 					try {
 						if(response.data[response.data_id][i]['deviceType'].substr(0,9)=='plug mini'){
-						item.innerText+=String(response.data[response.data_id][i]['power']).length?` [${response.data[response.data_id][i]['power']}]`:''
-						item.innerText+=String(response.data[response.data_id][i]['voltage']).length?` ${response.data[response.data_id][i]['voltage']}[V]`:''
-						if (String(response.data[response.data_id][i]['voltage']).length&&String(response.data[response.data_id][i]['weight']).length) {
-							item.innerText+=` ${Math.round((response.data[response.data_id][i]['voltage']/response.data[response.data_id][i]['weight'])/10)*10}[A]`
-						}
-						item.innerText+=String(response.data[response.data_id][i]['weight']).length?` ${response.data[response.data_id][i]['weight']}[W]`:''
+							item.innerText+=String(response.data[response.data_id][i]['power']).length?` [${response.data[response.data_id][i]['power']}]`:''
+							item.innerText+=String(response.data[response.data_id][i]['voltage']).length?` ${response.data[response.data_id][i]['voltage']}[V]`:''
+							if (String(response.data[response.data_id][i]['voltage']).length&&String(response.data[response.data_id][i]['weight']).length) {
+								item.innerText+=` ${Math.round((response.data[response.data_id][i]['voltage']/response.data[response.data_id][i]['weight'])/10)*10}[A]`
+							}
+							item.innerText+=String(response.data[response.data_id][i]['weight']).length?` ${response.data[response.data_id][i]['weight']}[W]`:''
 						}else{
 							item.innerText+=''
 						}
