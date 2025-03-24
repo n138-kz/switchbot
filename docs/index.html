@@ -179,12 +179,15 @@
 							item.innerHTML+='<img src="assets/icooonmono16097.svg" style="max-height:1em">';
 							item.innerHTML+=String(response.data[response.data_id][i]['power']).length?`[${response.data[response.data_id][i]['power']}]`:'';
 							item.innerHTML+=' ';
+							item.innerHTML+='<img src="assets/icooonmono16097.svg" style="max-height:1em">';
 							item.innerHTML+=String(response.data[response.data_id][i]['voltage']).length?`${response.data[response.data_id][i]['voltage']}[V]`:''
 							item.innerHTML+=' ';
 							if (String(response.data[response.data_id][i]['voltage']).length&&String(response.data[response.data_id][i]['weight']).length) {
 								item.innerHTML+=response.data[response.data_id][i]['weight']>0?`${Math.round(response.data[response.data_id][i]['weight']/response.data[response.data_id][i]['voltage']*10)/10}[A]`:'0.0[A]'
+								item.innerHTML+='<img src="assets/icooonmono16097.svg" style="max-height:1em">';
 								item.innerHTML+=' ';
 							}
+							item.innerHTML+='<img src="assets/icooonmono16097.svg" style="max-height:1em">';
 							item.innerHTML+=String(response.data[response.data_id][i]['weight']).length?`${response.data[response.data_id][i]['weight']}[W]`:'';
 							item.innerHTML+=' ';
 						} else if (response.data[response.data_id][i]['deviceType']&&response.data[response.data_id][i]['deviceType'].toLowerCase().substr(0,5)=='meter') {
