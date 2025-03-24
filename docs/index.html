@@ -178,39 +178,39 @@
 						} else if (response.data[response.data_id][i]['deviceType']&&response.data[response.data_id][i]['deviceType'].toLowerCase().substr(0,9)=='plug mini') {
 							item.innerHTML+='<img src="assets/icooonmono16097.svg" style="max-height:1em">';
 							item.innerHTML+=String(response.data[response.data_id][i]['power']).length?`[${response.data[response.data_id][i]['power']}]`:'';
-							item.innerHTML+=' ';
+							item.innerHTML+='<br /> ';
 							item.innerHTML+='<img src="assets/icooonmono16097.svg" style="max-height:1em">';
 							item.innerHTML+=String(response.data[response.data_id][i]['voltage']).length?`${response.data[response.data_id][i]['voltage']}[V]`:''
-							item.innerHTML+=' ';
+							item.innerHTML+='<br /> ';
 							if (String(response.data[response.data_id][i]['voltage']).length&&String(response.data[response.data_id][i]['weight']).length) {
 								item.innerHTML+='<img src="assets/icooonmono16097.svg" style="max-height:1em">';
 								item.innerHTML+=response.data[response.data_id][i]['weight']>0?`${Math.round(response.data[response.data_id][i]['weight']/response.data[response.data_id][i]['voltage']*10)/10}[A]`:'0.0[A]';
-								item.innerHTML+=' ';
+								item.innerHTML+='<br /> ';
 							}
 							item.innerHTML+='<img src="assets/icooonmono16097.svg" style="max-height:1em">';
 							item.innerHTML+=String(response.data[response.data_id][i]['weight']).length?`${response.data[response.data_id][i]['weight']}[W]`:'';
-							item.innerHTML+=' ';
+							item.innerHTML+='<br /> ';
 						} else if (response.data[response.data_id][i]['deviceType']&&response.data[response.data_id][i]['deviceType'].toLowerCase().substr(0,5)=='meter') {
 							item.innerHTML+='<img src="assets/icooonmono11307.svg" style="max-height:1em">';
 							item.innerHTML+=response.data[response.data_id][i]['temperature']?`${response.data[response.data_id][i]['temperature']}[℃]`:'null[℃]';
-							item.innerHTML+=' ';
+							item.innerHTML+='<br /> ';
 							item.innerHTML+='<img src="assets/icooonmono11307.svg" style="max-height:1em">';
 							item.innerHTML+=response.data[response.data_id][i]['humidity']?`${response.data[response.data_id][i]['humidity']}[%]`:'0[%]';
-							item.innerHTML+=' ';
+							item.innerHTML+='<br /> ';
 						} else if (response.data[response.data_id][i]['deviceType']&&response.data[response.data_id][i]['deviceType'].toLowerCase().substr(0,10)=='woiosensor') {
 							item.innerHTML+='<img src="assets/icooonmono11307.svg" style="max-height:1em">';
 							item.innerHTML+=response.data[response.data_id][i]['temperature']?`${response.data[response.data_id][i]['temperature']}[℃]`:'null[℃]';
-							item.innerHTML+=' ';
+							item.innerHTML+='<br /> ';
 							item.innerHTML+='<img src="assets/icooonmono11307.svg" style="max-height:1em">';
 							item.innerHTML+=response.data[response.data_id][i]['humidity']?`${response.data[response.data_id][i]['humidity']}[%]`:'0[%]';
-							item.innerHTML+=' ';
+							item.innerHTML+='<br /> ';
 						} else {}
 
 						if (false) {
 						} else if (response.data[response.data_id][i]['battery']&&String(response.data[response.data_id][i]['battery']).length) {
 							item.innerHTML+='<img src="assets/icooonmono00063.svg" style="max-height:1em">';
 							item.innerHTML+=response.data[response.data_id][i]['battery']?`${response.data[response.data_id][i]['battery']}[%]`:'0[%]';
-							item.innerHTML+=' ';
+							item.innerHTML+='<br /> ';
 						} else {}
 					} catch (error) {
 						console.error(error);
