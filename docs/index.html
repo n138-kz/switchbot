@@ -142,7 +142,7 @@
 				for(let i=0;i<response.data[response.data_id].length;i++){
 					console.debug(response.data[response.data_id][i]);
 					
-					response.data[response.data_id][i]['deviceType']=response.data[response.data_id][i]['deviceType']?response.data[response.data_id][i]['deviceType']:null
+					response.data[response.data_id][i]['deviceType']=String(response.data[response.data_id][i]['deviceType']).length>0?response.data[response.data_id][i]['deviceType']:null
 
 					line=document.createElement('tr');
 					item=document.createElement('td');
