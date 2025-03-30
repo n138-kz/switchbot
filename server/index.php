@@ -1,6 +1,11 @@
 <?php
 class webapp_client{
 	public $result=[];
+	public $dbaccess=[
+		'dsn'=>null,
+		'credential'=>null,
+		'tableprefix'=>'',
+	];
 
 	function __construct() {
 		$this->result = [];
@@ -21,6 +26,18 @@ class webapp_client{
 		$result = $this->result;
 		$result['evented_at'] = time();
 		return $result;
+	}
+	function loggingDB($option=[]) {
+		private const DEFAULT_OPTION = [
+			'evented_on'=>null,
+		];
+		$option = array_merge(DEFAULT_OPTION, $option);
+		$dsn = (isset($this->dbaccess['dsn'])&&$this->dbaccess['dsn']!='')?$this->dbaccess['dsn']:null;
+		try {
+			$pdo = new PDO($dsn);
+		} catch (\Throwable $th) {
+			error_log($th->getTraceAsString());
+		}
 	}
 }
 class discord{
@@ -289,6 +306,16 @@ $config=array_merge($config, ['internal'=>['standardlib'=>['json'=>[
 	'JSON_OPTION_ENCODE'=>JSON_OPTION_ENCODE,
 	'JSON_OPTION_DECODE'=>JSON_OPTION_DECODE,
 ]]]]);
+$webapp_client->dbaccess=[];
+$webapp_client->dbaccess['credential']=$config['internal']['databases'][0];
+$webapp_client->dbaccess['dsn']='{schema}:host={host};port={port};dbname={dbname};user={user};password={password}';
+$webapp_client->dbaccess['dsn']=str_replace('{schema}', $config['internal']['databases'][0]['schema'], $webapp_client->dbaccess['dsn']);
+$webapp_client->dbaccess['dsn']=str_replace('{host}', $config['internal']['databases'][0]['host'], $webapp_client->dbaccess['dsn']);
+$webapp_client->dbaccess['dsn']=str_replace('{port}', $config['internal']['databases'][0]['port'], $webapp_client->dbaccess['dsn']);
+$webapp_client->dbaccess['dsn']=str_replace('{database}', $config['internal']['databases'][0]['database'], $webapp_client->dbaccess['dsn']);
+$webapp_client->dbaccess['dsn']=str_replace('{user}', $config['internal']['databases'][0]['user'], $webapp_client->dbaccess['dsn']);
+$webapp_client->dbaccess['dsn']=str_replace('{password}', $config['internal']['databases'][0]['password'], $webapp_client->dbaccess['dsn']);
+$webapp_client->dbaccess['tableprefix']=$config['internal']['databases'][0]['tableprefix'];
 
 $discord_client=new discord($config['external']['discord']['webhook']['notice']['url'].'?wait=true', ['Content-Type: application/json']);
 $discord_client->avatar_url=$config['external']['discord']['webhook']['notice']['avatar'];
