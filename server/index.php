@@ -390,6 +390,8 @@ if (false) {
 	} else {
 		$webapp_client->result['message'] = 'Getted the API data.';
 	}
+
+	$webapp_client->loggingDB(['evented_on'=>'devices_list','result_status'=>is_null($webapp_client->result['data'])]);
 	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
 } elseif (strtolower( $_SERVER['REQUEST_METHOD'] ) == 'get' && $accessmode=='scenes_list') {
 	$webapp_client->result['data_id'] = 'switchbot.'.$accessmode;
@@ -403,6 +405,8 @@ if (false) {
 		$webapp_client->result['message'] = 'Getted the API data.';
 	}
 	array_multisort($webapp_client->result['data'][$webapp_client->result['data_id']]);
+
+	$webapp_client->loggingDB(['evented_on'=>'scenes_list','result_status'=>is_null($webapp_client->result['data'])]);
 	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
 } elseif (strtolower( $_SERVER['REQUEST_METHOD'] ) == 'post' && $accessmode=='scene_activate') {
 	$sceneId = isset($_REQUEST['scene_id'])?$_REQUEST['scene_id']:'';
@@ -422,10 +426,14 @@ if (false) {
 	} else {
 		$webapp_client->result['message'] = 'Getted the API data.';
 	}
+
+	$webapp_client->loggingDB(['evented_on'=>'scene_activate','scene_id'=>$sceneId,'result_status'=>is_null($webapp_client->result['data'])]);
 	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
 } else {
 	http_response_code(400);
 	$webapp_client->result['message'] = 'Unknown params accessmode: '.$accessmode;
+
+	$webapp_client->loggingDB(['evented_on'=>'unknown_parameter']);
 	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
 	exit(1);
 }
