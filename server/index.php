@@ -251,6 +251,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'&&substr(strtolower($_SERVER['CONTENT_TYPE'
 $webapp_client = new webapp_client();
 $webapp_client->result['connection']['method'] = $_SERVER['REQUEST_METHOD'];
 $webapp_client->result['connection']['client']['address'] = $_SERVER['REMOTE_ADDR'];
+$webapp_client->result['connection']['contentType'] = $_SERVER['CONTENT_TYPE'];
 
 if( ! ( substr( strtolower( $_SERVER['REQUEST_METHOD'] ), 0, 6 ) == 'option' || strtolower( $_SERVER['REQUEST_METHOD'] ) == 'get' || strtolower( $_SERVER['REQUEST_METHOD'] ) == 'post' ) ) {
 	http_response_code(405);
