@@ -6,6 +6,8 @@ backup/
 # Temporary files
 *.tmp
 *.dat
+request*.json
+result*.json
 
 # Secret files
 *.env
