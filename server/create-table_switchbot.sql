@@ -9,5 +9,5 @@ CREATE TABLE IF NOT EXISTS switchbot
 	result_status boolean
 );
 CREATE OR REPLACE VIEW switchbot_view
- AS
- SELECT to_timestamp(timestamp),* FROM switchbot;
+	AS
+	SELECT to_timestamp(timestamp),* FROM switchbot;
