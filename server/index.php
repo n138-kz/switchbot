@@ -29,11 +29,11 @@ class webapp_client{
 	}
 	function loggingDB($option=[]) {
 		$default_option = [
-			'evented_on'   =>null,
-			'scene_id'     =>null,
-			'result_status'=>null,
-			'result_code'  =>null,
-			'result_mesg'  =>null,
+			'evented_on'    =>null,
+			'scene_id'      =>null,
+			'result_status' =>null,
+			'result_code'   =>null,
+			'result_mesg'   =>null,
 			'request_header'=>null,
 		];
 		$option = array_merge($default_option, $option);
