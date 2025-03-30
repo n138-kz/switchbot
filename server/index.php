@@ -583,6 +583,12 @@ if (false) {
 					}
 					echo '|'.PHP_EOL;
 				}
+
+				/* **/
+				foreach($item_length as $k => $v){
+					echo '+ '.str_pad('', $item_length[$k]-3, '-', STR_PAD_BOTH).' ';
+				}
+				echo '+'.PHP_EOL;
 			} elseif ( $displayformat == 'html/table' ) {
 				header('Content-Type: text/plain');
 				echo '<html>';
