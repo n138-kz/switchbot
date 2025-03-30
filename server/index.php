@@ -70,6 +70,34 @@ class webapp_client{
 			error_log('Throw: '.$th->__toString());
 		}
 	}
+	function printDB($option=[]) {
+		$default_option = [
+			'columns1' => '*',
+		];
+		$option = array_merge($default_option, $option);
+
+		$dsn='{schema}:host={host};port={port};dbname={dbname};user={user};password={password}';
+		$dsn=str_replace('{schema}',   $this->dbaccess['credential']['schema'],   $dsn);
+		$dsn=str_replace('{host}',     $this->dbaccess['credential']['host'],     $dsn);
+		$dsn=str_replace('{port}',     $this->dbaccess['credential']['port'],     $dsn);
+		$dsn=str_replace('{dbname}',   $this->dbaccess['credential']['database'], $dsn);
+		$dsn=str_replace('{user}',     $this->dbaccess['credential']['user'],     $dsn);
+		$dsn=str_replace('{password}', $this->dbaccess['credential']['password'], $dsn);
+		$tableprefix=$this->dbaccess['credential']['tableprefix'];
+
+		try {
+			$pdo = new PDO($dsn, $this->dbaccess['credential']['user'], $this->dbaccess['credential']['password']);
+			$sql = 'select {columns1} from {tableName};';
+			$sql = str_replace('{tableName}', $tableprefix . '_view', $sql);
+			$sql = str_replace('{columns1}', $option['columns1'], $sql);
+			$pre = $pdo -> prepare($sql);
+			$res = $pre -> execute([]);
+			$res = $pre -> fetchAll(PDO::FETCH_ASSOC);
+			return $res;
+		} catch (\Throwable $th) {
+			error_log('Throw: '.$th->__toString());
+		}
+	}
 }
 class discord{
 	public $webhook_url='';
