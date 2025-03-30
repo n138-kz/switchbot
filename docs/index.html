@@ -130,7 +130,7 @@
 				console.log(response.data[response.data_id]);
 				let table=document.createElement('table');
 				table.classList.add('switchbotapi_devices_list');
-				columns=['deviceName','deviceType', 'attr'];
+				columns=['deviceName','deviceType', 'deviceAttribute'];
 				let line=null, item=null;
 				line=document.createElement('tr');
 				for(let i=0;i<columns.length;i++){
