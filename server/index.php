@@ -52,8 +52,8 @@ class webapp_client{
 			$pdo = new PDO($dsn, $this->dbaccess['credential']['user'], $this->dbaccess['credential']['password']);
 			$sql = 'INSERT INTO {tableName} ({columns1}) VALUES ({columns2});';
 			$sql = str_replace('{tableName}', $tableprefix, $sql);
-			$sql = str_replace('{columns1}', 'remote_addr, remote_port, useragent, evented_on, scene_id, result_status', $sql);
-			$sql = str_replace('{columns2}', '?,?,?,?,?,?', $sql);
+			$sql = str_replace('{columns1}', 'remote_addr, remote_port, useragent, evented_on, scene_id, result_status, result_code, result_mesg, request_header', $sql);
+			$sql = str_replace('{columns2}', '?,?,?,?,?,?,?,?,?', $sql);
 			$pre = $pdo -> prepare($sql);
 			$res = $pre -> execute([
 				$_SERVER['REMOTE_ADDR'],
@@ -62,6 +62,9 @@ class webapp_client{
 				$option['evented_on'],
 				$option['scene_id'],
 				$option['result_status'],
+				$option['result_code'],
+				$option['result_mesg'],
+				$option['request_header'],
 			]);
 			error_log(json_encode($res));
 		} catch (\Throwable $th) {
