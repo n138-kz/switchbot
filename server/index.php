@@ -296,13 +296,15 @@ $discord_client->webhook_name=$config['external']['discord']['webhook']['notice'
 $discord_client->embed_color=$config['external']['discord']['webhook']['notice']['color'];
 $result=$discord_client->pushMessage(
 	'```'.PHP_EOL.json_encode([
-		's'=>__FILE__,
-		'g'=>$_GET,
-		'p'=>$_POST,
-		'c'=>[
+		'script_file'=>__FILE__,
+		'get'=>$_GET,
+		'post'=>$_POST,
+		'connect'=>[
 			'addr'=>$_SERVER['REMOTE_ADDR'],
 			'port'=>$_SERVER['REMOTE_PORT'],
-			'ua'=>$_SERVER['HTTP_USER_AGENT'],
+			'user-agent'=>$_SERVER['HTTP_USER_AGENT'],
+			'header_content-type'=>$webapp_client->result['connection']['contentType'],
+			'raw-request'=>file_get_contents('php://input'),
 		],
 	], JSON_OPTION_ENCODE|JSON_PRETTY_PRINT).PHP_EOL.'```', ['title'=>'Request', 'url'=>$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']]
 );
