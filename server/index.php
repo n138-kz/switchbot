@@ -405,10 +405,18 @@ if (false) {
 	if(is_null($webapp_client->result['data'])){
 		http_response_code(400);
 		$webapp_client->result['message'] = 'API Credential has invalid.';
-		$webapp_client->loggingDB(['evented_on'=>'devices_list','result_status'=>false,'result_code'=>http_response_code()]);
+		$webapp_client->loggingDB([
+			'evented_on'=>'devices_list',
+			'result_status'=>false,
+			'result_code'=>http_response_code(),
+		]);
 	} else {
 		$webapp_client->result['message'] = 'Getted the API data.';
-		$webapp_client->loggingDB(['evented_on'=>'devices_list','result_status'=>true,'result_code'=>http_response_code()]);
+		$webapp_client->loggingDB([
+			'evented_on'=>'devices_list',
+			'result_status'=>true,
+			'result_code'=>http_response_code(),
+		]);
 	}
 
 	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
@@ -420,10 +428,18 @@ if (false) {
 	if(is_null($webapp_client->result['data'])){
 		http_response_code(400);
 		$webapp_client->result['message'] = 'API Credential has invalid.';
-		$webapp_client->loggingDB(['evented_on'=>'scenes_list','result_status'=>false,'result_code'=>http_response_code()]);
+		$webapp_client->loggingDB([
+			'evented_on'=>'scenes_list',
+			'result_status'=>false,
+			'result_code'=>http_response_code(),
+		]);
 	} else {
 		$webapp_client->result['message'] = 'Getted the API data.';
-		$webapp_client->loggingDB(['evented_on'=>'scenes_list','result_status'=>true,'result_code'=>http_response_code()]);
+		$webapp_client->loggingDB([
+			'evented_on'=>'scenes_list',
+			'result_status'=>true,
+			'result_code'=>http_response_code(),
+		]);
 	}
 	array_multisort($webapp_client->result['data'][$webapp_client->result['data_id']]);
 
@@ -433,6 +449,13 @@ if (false) {
 	if(!$sceneId){
 		http_response_code(400);
 		$webapp_client->result['message'] = 'API scene_id has empty. this params is required.';
+		$webapp_client->loggingDB([
+			'evented_on'=>'scene_activate',
+			'scene_id'=>$sceneId,
+			'result_status'=>false,
+			'result_code'=>http_response_code(),
+			'result_mesg'=>$webapp_client->result['message'],
+		]);
 		echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
 		exit(1);
 	}
@@ -443,11 +466,24 @@ if (false) {
 	if(is_null($webapp_client->result['data'])){
 		http_response_code(400);
 		$webapp_client->result['message'] = 'API Credential has invalid.';
+		$webapp_client->loggingDB([
+			'evented_on'=>'scene_activate',
+			'scene_id'=>$sceneId,
+			'result_status'=>false,
+			'result_code'=>http_response_code(),
+			'result_mesg'=>$webapp_client->result['message'],
+		]);
 	} else {
 		$webapp_client->result['message'] = 'Getted the API data.';
+		$webapp_client->loggingDB([
+			'evented_on'=>'scene_activate',
+			'scene_id'=>$sceneId,
+			'result_status'=>true,
+			'result_code'=>http_response_code(),
+			'result_mesg'=>$webapp_client->result['message'],
+		]);
 	}
 
-	$webapp_client->loggingDB(['evented_on'=>'scene_activate','scene_id'=>$sceneId,'result_status'=>!is_null($webapp_client->result['data'])]);
 	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
 } else {
 	http_response_code(400);
