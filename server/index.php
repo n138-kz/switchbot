@@ -66,7 +66,6 @@ class webapp_client{
 				$option['result_mesg'],
 				$option['request_header'],
 			]);
-			error_log(json_encode($res));
 		} catch (\Throwable $th) {
 			error_log('Throw: '.$th->__toString());
 		}
