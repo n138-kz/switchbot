@@ -237,6 +237,17 @@ const JSON_DEPTH = 512;
 const JSON_OPTION_ENCODE = JSON_OPTION;
 const JSON_OPTION_DECODE = JSON_OPTION;
 
+$_SERVER['CONTENT_TYPE'] = (isset($_SERVER['CONTENT_TYPE']))?$_SERVER['CONTENT_TYPE']:'application/octet-stream';
+if($_SERVER['REQUEST_METHOD']=='POST'&&substr(strtolower($_SERVER['CONTENT_TYPE']),0,16)=='application/json'){
+	try {
+		$_POST = file_get_contents('php://input');
+		$_POST = strlen($_POST)>0 ? json_decode($_POST, TRUE, JSON_DEPTH, JSON_OPTION_DECODE) : [];
+	} catch (\JsonException $e) {
+		$_POST = null;
+		error_log('JSON Parse error: ' . __FILE__ . ':' . __LINE__ . PHP_EOL . $e->getTraceAsString());
+	}
+}
+
 $webapp_client = new webapp_client();
 $webapp_client->result['connection']['method'] = $_SERVER['REQUEST_METHOD'];
 $webapp_client->result['connection']['client']['address'] = $_SERVER['REMOTE_ADDR'];
