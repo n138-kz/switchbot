@@ -6,7 +6,10 @@ CREATE TABLE IF NOT EXISTS switchbot
 	useragent text NOT NULL,
 	evented_on text NOT NULL,
 	scene_id text,
-	result_status boolean
+	result_status boolean,
+	result_code integer,
+	result_mesg text,
+	request_header json
 );
 CREATE OR REPLACE VIEW switchbot_view
 	AS
