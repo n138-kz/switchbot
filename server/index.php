@@ -28,15 +28,41 @@ class webapp_client{
 		return $result;
 	}
 	function loggingDB($option=[]) {
-		private const DEFAULT_OPTION = [
-			'evented_on'=>null,
+		$default_option = [
+			'evented_on'   =>null,
+			'scene_id'     =>null,
+			'result_status'=>null,
 		];
-		$option = array_merge(DEFAULT_OPTION, $option);
-		$dsn = (isset($this->dbaccess['dsn'])&&$this->dbaccess['dsn']!='')?$this->dbaccess['dsn']:null;
+		$option = array_merge($default_option, $option);
+		$option['result_status']=$option['result_status']?1:0;
+
+		$dsn='{schema}:host={host};port={port};dbname={dbname};user={user};password={password}';
+		$dsn=str_replace('{schema}',   $this->dbaccess['credential']['schema'],   $dsn);
+		$dsn=str_replace('{host}',     $this->dbaccess['credential']['host'],     $dsn);
+		$dsn=str_replace('{port}',     $this->dbaccess['credential']['port'],     $dsn);
+		$dsn=str_replace('{dbname}',   $this->dbaccess['credential']['database'], $dsn);
+		$dsn=str_replace('{user}',     $this->dbaccess['credential']['user'],     $dsn);
+		$dsn=str_replace('{password}', $this->dbaccess['credential']['password'], $dsn);
+		$tableprefix=$this->dbaccess['credential']['tableprefix'];
+
 		try {
-			$pdo = new PDO($dsn);
+			$pdo = new PDO($dsn, $this->dbaccess['credential']['user'], $this->dbaccess['credential']['password']);
+			$sql = 'INSERT INTO {tableName} ({columns1}) VALUES ({columns2});';
+			$sql = str_replace('{tableName}', $tableprefix, $sql);
+			$sql = str_replace('{columns1}', 'remote_addr, remote_port, useragent, evented_on, scene_id, result_status', $sql);
+			$sql = str_replace('{columns2}', '?,?,?,?,?,?', $sql);
+			$pre = $pdo -> prepare($sql);
+			$res = $pre -> execute([
+				$_SERVER['REMOTE_ADDR'],
+				$_SERVER['REMOTE_PORT'],
+				$_SERVER['HTTP_USER_AGENT'],
+				$option['evented_on'],
+				$option['scene_id'],
+				$option['result_status'],
+			]);
+			error_log(json_encode($res));
 		} catch (\Throwable $th) {
-			error_log($th->getTraceAsString());
+			error_log('Throw: '.$th->__toString());
 		}
 	}
 }
@@ -300,22 +326,14 @@ if(!is_readable($config)){
 }
 
 $config=array_merge($config_base, json_decode(file_get_contents($config), TRUE, JSON_DEPTH, JSON_OPTION_DECODE));
-$config=array_merge($config, ['internal'=>['standardlib'=>['json'=>[
+$config=array_merge(['internal'=>['standardlib'=>['json'=>[
 	'JSON_OPTION'       =>JSON_OPTION,
 	'JSON_DEPTH'        =>JSON_DEPTH,
 	'JSON_OPTION_ENCODE'=>JSON_OPTION_ENCODE,
 	'JSON_OPTION_DECODE'=>JSON_OPTION_DECODE,
-]]]]);
+]]]], $config);
 $webapp_client->dbaccess=[];
 $webapp_client->dbaccess['credential']=$config['internal']['databases'][0];
-$webapp_client->dbaccess['dsn']='{schema}:host={host};port={port};dbname={dbname};user={user};password={password}';
-$webapp_client->dbaccess['dsn']=str_replace('{schema}', $config['internal']['databases'][0]['schema'], $webapp_client->dbaccess['dsn']);
-$webapp_client->dbaccess['dsn']=str_replace('{host}', $config['internal']['databases'][0]['host'], $webapp_client->dbaccess['dsn']);
-$webapp_client->dbaccess['dsn']=str_replace('{port}', $config['internal']['databases'][0]['port'], $webapp_client->dbaccess['dsn']);
-$webapp_client->dbaccess['dsn']=str_replace('{database}', $config['internal']['databases'][0]['database'], $webapp_client->dbaccess['dsn']);
-$webapp_client->dbaccess['dsn']=str_replace('{user}', $config['internal']['databases'][0]['user'], $webapp_client->dbaccess['dsn']);
-$webapp_client->dbaccess['dsn']=str_replace('{password}', $config['internal']['databases'][0]['password'], $webapp_client->dbaccess['dsn']);
-$webapp_client->dbaccess['tableprefix']=$config['internal']['databases'][0]['tableprefix'];
 
 $discord_client=new discord($config['external']['discord']['webhook']['notice']['url'].'?wait=true', ['Content-Type: application/json']);
 $discord_client->avatar_url=$config['external']['discord']['webhook']['notice']['avatar'];
@@ -387,11 +405,12 @@ if (false) {
 	if(is_null($webapp_client->result['data'])){
 		http_response_code(400);
 		$webapp_client->result['message'] = 'API Credential has invalid.';
+		$webapp_client->loggingDB(['evented_on'=>'devices_list','result_status'=>false,'result_code'=>http_response_code()]);
 	} else {
 		$webapp_client->result['message'] = 'Getted the API data.';
+		$webapp_client->loggingDB(['evented_on'=>'devices_list','result_status'=>true,'result_code'=>http_response_code()]);
 	}
 
-	$webapp_client->loggingDB(['evented_on'=>'devices_list','result_status'=>is_null($webapp_client->result['data'])]);
 	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
 } elseif (strtolower( $_SERVER['REQUEST_METHOD'] ) == 'get' && $accessmode=='scenes_list') {
 	$webapp_client->result['data_id'] = 'switchbot.'.$accessmode;
@@ -401,12 +420,13 @@ if (false) {
 	if(is_null($webapp_client->result['data'])){
 		http_response_code(400);
 		$webapp_client->result['message'] = 'API Credential has invalid.';
+		$webapp_client->loggingDB(['evented_on'=>'scenes_list','result_status'=>false,'result_code'=>http_response_code()]);
 	} else {
 		$webapp_client->result['message'] = 'Getted the API data.';
+		$webapp_client->loggingDB(['evented_on'=>'scenes_list','result_status'=>true,'result_code'=>http_response_code()]);
 	}
 	array_multisort($webapp_client->result['data'][$webapp_client->result['data_id']]);
 
-	$webapp_client->loggingDB(['evented_on'=>'scenes_list','result_status'=>is_null($webapp_client->result['data'])]);
 	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
 } elseif (strtolower( $_SERVER['REQUEST_METHOD'] ) == 'post' && $accessmode=='scene_activate') {
 	$sceneId = isset($_REQUEST['scene_id'])?$_REQUEST['scene_id']:'';
@@ -427,7 +447,7 @@ if (false) {
 		$webapp_client->result['message'] = 'Getted the API data.';
 	}
 
-	$webapp_client->loggingDB(['evented_on'=>'scene_activate','scene_id'=>$sceneId,'result_status'=>is_null($webapp_client->result['data'])]);
+	$webapp_client->loggingDB(['evented_on'=>'scene_activate','scene_id'=>$sceneId,'result_status'=>!is_null($webapp_client->result['data'])]);
 	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
 } else {
 	http_response_code(400);
