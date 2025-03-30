@@ -32,6 +32,8 @@ class webapp_client{
 			'evented_on'   =>null,
 			'scene_id'     =>null,
 			'result_status'=>null,
+			'result_code'  =>null,
+			'result_mesg'  =>null,
 		];
 		$option = array_merge($default_option, $option);
 		$option['result_status']=$option['result_status']?1:0;
