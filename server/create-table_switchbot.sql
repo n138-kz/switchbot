@@ -13,4 +13,16 @@ CREATE TABLE IF NOT EXISTS switchbot
 );
 CREATE OR REPLACE VIEW switchbot_view
 	AS
-	SELECT to_timestamp(timestamp),* FROM switchbot;
+	SELECT
+		to_timestamp(timestamp) AS timestamp,
+		remote_addr,
+		remote_port,
+		useragent,
+		evented_on,
+		scene_id,
+		result_status,
+		result_code,
+		result_mesg,
+		request_header
+	FROM switchbot
+	ORDER BY "timestamp" ASC;
