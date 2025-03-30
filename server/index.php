@@ -409,6 +409,7 @@ if (false) {
 			'evented_on'=>'devices_list',
 			'result_status'=>false,
 			'result_code'=>http_response_code(),
+			'request_header'=>json_encode(apache_request_headers(), JSON_OPTION_ENCODE),
 		]);
 	} else {
 		$webapp_client->result['message'] = 'Getted the API data.';
@@ -416,6 +417,7 @@ if (false) {
 			'evented_on'=>'devices_list',
 			'result_status'=>true,
 			'result_code'=>http_response_code(),
+			'request_header'=>json_encode(apache_request_headers(), JSON_OPTION_ENCODE),
 		]);
 	}
 
@@ -432,6 +434,7 @@ if (false) {
 			'evented_on'=>'scenes_list',
 			'result_status'=>false,
 			'result_code'=>http_response_code(),
+			'request_header'=>json_encode(apache_request_headers(), JSON_OPTION_ENCODE),
 		]);
 	} else {
 		$webapp_client->result['message'] = 'Getted the API data.';
@@ -439,6 +442,7 @@ if (false) {
 			'evented_on'=>'scenes_list',
 			'result_status'=>true,
 			'result_code'=>http_response_code(),
+			'request_header'=>json_encode(apache_request_headers(), JSON_OPTION_ENCODE),
 		]);
 	}
 	array_multisort($webapp_client->result['data'][$webapp_client->result['data_id']]);
@@ -455,6 +459,7 @@ if (false) {
 			'result_status'=>false,
 			'result_code'=>http_response_code(),
 			'result_mesg'=>$webapp_client->result['message'],
+			'request_header'=>json_encode(apache_request_headers(), JSON_OPTION_ENCODE),
 		]);
 		echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
 		exit(1);
@@ -472,6 +477,7 @@ if (false) {
 			'result_status'=>false,
 			'result_code'=>http_response_code(),
 			'result_mesg'=>$webapp_client->result['message'],
+			'request_header'=>json_encode(apache_request_headers(), JSON_OPTION_ENCODE),
 		]);
 	} else {
 		$webapp_client->result['message'] = 'Getted the API data.';
@@ -481,6 +487,7 @@ if (false) {
 			'result_status'=>true,
 			'result_code'=>http_response_code(),
 			'result_mesg'=>$webapp_client->result['message'],
+			'request_header'=>json_encode(apache_request_headers(), JSON_OPTION_ENCODE),
 		]);
 	}
 
