@@ -34,6 +34,7 @@ class webapp_client{
 			'result_status'=>null,
 			'result_code'  =>null,
 			'result_mesg'  =>null,
+			'request_header'=>null,
 		];
 		$option = array_merge($default_option, $option);
 		$option['result_status']=$option['result_status']?1:0;
