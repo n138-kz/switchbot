@@ -539,6 +539,49 @@ if (false) {
 			if(false){
 			} elseif ( $displayformat == 'json' ) {
 				echo json_encode($res, JSON_OPTION_ENCODE);
+			} elseif ( $displayformat == 'text/table' ) {
+				/* item length **/
+				$item_length = [];
+				for($i=0;$i<count($res);$i++){
+					foreach($res[$i] as $k => $v){
+						if(!isset($item_length[$k])){
+							$item_length[$k]=mb_strlen($v)+3;
+						} else {
+							$item_length[$k]=($item_length[$k]<mb_strlen($v)+3)?mb_strlen($v)+3:$item_length[$k];
+						}
+					}
+				}
+				
+				foreach($item_length as $k => $v){
+					$item_length[$k] = ($v-mb_strlen($k)>3)?$v-mb_strlen($k):$v;
+					$item_length[$k] = ($v<(mb_strlen($k)+3))?mb_strlen($k):$v;
+				}
+
+				foreach($item_length as $k => $v){
+					echo '+';
+					for($i=0;$i<$v-2;$i++){
+						echo '-';
+					}
+					echo '-';
+				}
+				echo '+'.PHP_EOL;
+				foreach($item_length as $k => $v){
+					echo '| '.str_pad($k, $item_length[$k]-3, ' ', STR_PAD_BOTH).' ';
+				}
+				echo '|'.PHP_EOL;
+				foreach($item_length as $k => $v){
+					echo '| '.str_pad('', $item_length[$k]-3, '-', STR_PAD_BOTH).' ';
+				}
+				echo '|'.PHP_EOL;
+				
+
+				/* **/
+				for($i=0;$i<count($res);$i++){
+					foreach($res[$i] as $k => $v){
+						echo '| '.str_pad($v, $item_length[$k]-3).' ';
+					}
+					echo '|'.PHP_EOL;
+				}
 			}
 		} else {
 			http_response_code(403);
