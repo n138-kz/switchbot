@@ -582,6 +582,14 @@ if (false) {
 					}
 					echo '|'.PHP_EOL;
 				}
+			} elseif ( $displayformat == 'html/table' ) {
+				header('Content-Type: text/plain');
+				echo '<html>';
+				echo '<body>';
+				echo '<table>';
+				echo '</table>';
+				echo '</body>';
+				echo '</html>' . PHP_EOL;
 			}
 		} else {
 			http_response_code(403);
