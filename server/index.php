@@ -540,6 +540,7 @@ if (false) {
 			} elseif ( $displayformat == 'json' ) {
 				echo json_encode($res, JSON_OPTION_ENCODE);
 			} elseif ( $displayformat == 'text/table' ) {
+				header('Content-Type: text/plain');
 				/* item length **/
 				$item_length = [];
 				for($i=0;$i<count($res);$i++){
