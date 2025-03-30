@@ -367,8 +367,8 @@ $webapp_client->result['discord_webhook_event'] = [
 ];
 
 $webapp_client->result['config'] = $config;
-$token = $config['external']['switchbot']['credential']['client_token'];
-$secret = $config['external']['switchbot']['credential']['client_secret'];
+$token = '';
+$secret = '';
 try{
 	list($token, $secret) = json_decode(base64_decode($_GET['x-token']), TRUE, JSON_DEPTH, JSON_OPTION_DECODE);
 	$webapp_client->result['config']['external']['switchbot']['credential']['client_token'] = '(hashed):'.hash_hmac('sha256', $token, $_SERVER['REMOTE_ADDR']);
