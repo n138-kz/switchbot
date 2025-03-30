@@ -428,6 +428,7 @@ $webapp_client->result['file']=null;
 $webapp_client->result['discord_webhook_event']=null;
 
 $accessmode=isset($_GET['accessmode'])?$_GET['accessmode']:'scenes_list';
+$displayformat=isset($_GET['displayformat'])?$_GET['displayformat']:'json';
 if (false) {
 } elseif ($accessmode==''&&false) {
 } elseif (strtolower( $_SERVER['REQUEST_METHOD'] ) == 'get' && $accessmode=='devices_list') {
@@ -529,6 +530,29 @@ if (false) {
 	}
 
 	echo json_encode($webapp_client->result_return(), JSON_OPTION_ENCODE);
+} elseif (strtolower( $_SERVER['REQUEST_METHOD'] ) == 'get' && $accessmode=='sessions_log') {
+	for($h=0;$h<count($config['external']['switchbot']['credential']);$h++){
+		if($token==$config['external']['switchbot']['credential'][$h]['client_token']){
+			$webapp_client->result['message'] = 'Getted the API data.';
+			$res = $webapp_client->printDB(['columns1'=>'timestamp,remote_addr as addr,remote_port as port,useragent,evented_on,scene_id,result_mesg']);
+
+			if(false){
+			} elseif ( $displayformat == 'json' ) {
+				echo json_encode($res, JSON_OPTION_ENCODE);
+			}
+		} else {
+			http_response_code(403);
+			$webapp_client->result['message'] = 'API Credential has invalid.';
+		}
+	}
+	$webapp_client->loggingDB([
+		'evented_on'=>$accessmode,
+		'result_status'=>true,
+		'result_code'=>http_response_code(),
+		'result_mesg'=>$webapp_client->result['message'],
+		'request_header'=>json_encode(apache_request_headers(), JSON_OPTION_ENCODE),
+	]);
+	
 } else {
 	http_response_code(400);
 	$webapp_client->result['message'] = 'Unknown params accessmode: '.$accessmode;
