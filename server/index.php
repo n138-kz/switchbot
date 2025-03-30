@@ -571,9 +571,9 @@ if (false) {
 				}
 				echo '|'.PHP_EOL;
 				foreach($item_length as $k => $v){
-					echo '| '.str_pad('', $item_length[$k]-3, '-', STR_PAD_BOTH).' ';
+					echo '+ '.str_pad('', $item_length[$k]-3, '-', STR_PAD_BOTH).' ';
 				}
-				echo '|'.PHP_EOL;
+				echo '+'.PHP_EOL;
 				
 
 				/* **/
