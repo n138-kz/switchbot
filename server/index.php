@@ -587,6 +587,10 @@ if (false) {
 				echo '<html>';
 				echo '<body>';
 				echo '<table>';
+				echo '<thead>';
+				echo '<tr>';
+				echo '</tr>';
+				echo '</thead>';
 				echo '</table>';
 				echo '</body>';
 				echo '</html>' . PHP_EOL;
