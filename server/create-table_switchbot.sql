@@ -8,3 +8,6 @@ CREATE TABLE IF NOT EXISTS switchbot
 	scene_id text,
 	result_status boolean
 );
+CREATE OR REPLACE VIEW switchbot_view
+ AS
+ SELECT to_timestamp(timestamp),* FROM switchbot;
