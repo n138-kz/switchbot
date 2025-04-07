@@ -428,6 +428,7 @@ $webapp_client->result['file']=null;
 $webapp_client->result['discord_webhook_event']=null;
 
 $accessmode=isset($_GET['accessmode'])?$_GET['accessmode']:'scenes_list';
+$runcount=isset($_GET['runcount'])?$_GET['runcount']:1;
 $displayformat=isset($_GET['displayformat'])?$_GET['displayformat']:'json';
 if (false) {
 } elseif ($accessmode==''&&false) {
@@ -503,6 +504,8 @@ if (false) {
 		exit(1);
 	}
 	$webapp_client->result['data_id'] = 'switchbot.'.$accessmode;
+	for($i=0; $i<$runcount; $i++) { 
+	}
 	$webapp_client->result['data'] = [
 		$webapp_client->result['data_id']=>$switchbot->runScene($token,$sign,$nonce,$t,$sceneId),
 	];
