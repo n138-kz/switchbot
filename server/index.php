@@ -505,10 +505,10 @@ if (false) {
 	}
 	$webapp_client->result['data_id'] = 'switchbot.'.$accessmode;
 	for($i=0; $i<$runcount; $i++) { 
+		$webapp_client->result['data'] = [
+			$webapp_client->result['data_id']=>$switchbot->runScene($token,$sign,$nonce,$t,$sceneId),
+		];
 	}
-	$webapp_client->result['data'] = [
-		$webapp_client->result['data_id']=>$switchbot->runScene($token,$sign,$nonce,$t,$sceneId),
-	];
 	if(is_null($webapp_client->result['data'])){
 		http_response_code(400);
 		$webapp_client->result['message'] = 'API Credential has invalid.';
