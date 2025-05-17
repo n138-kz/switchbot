@@ -9,8 +9,6 @@ on:
       runCount:
         type: number
         default: 1
-  schedule:
-    - cron: "0 5 */2 * *"
 
 env:
   discord_avatar_url: https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png
