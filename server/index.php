@@ -505,6 +505,7 @@ if (false) {
 	}
 	$webapp_client->result['data_id'] = 'switchbot.'.$accessmode;
 	for($i=0; $i<$runcount; $i++) { 
+		usleep( 100000 );
 		$webapp_client->result['data'] = [
 			$webapp_client->result['data_id']=>$switchbot->runScene($token,$sign,$nonce,$t,$sceneId),
 		];
