@@ -72,6 +72,9 @@
 			load_api_credential();
 			getDevicesList();
 			getScenesList();
+			setInterval(()=>{
+				getDevicesList();
+			},5000);
 		});
 		function store_api_credential(caller=null) {
 			try {
