@@ -50,4 +50,4 @@ jobs:
           echo -n "context=$context" >> $GITHUB_OUTPUT
       - name: Use the switchbot context variable
         run: |
-          echo "::notice title=Switchbot Context::${{ steps.context.outputs.context }}"
+          echo '::notice title=Switchbot Context::${{ steps.context.outputs.context }}'
