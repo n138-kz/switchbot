@@ -1,0 +1,55 @@
+name: Get Info by switchbot API
+
+on:
+  workflow_dispatch:
+  push:
+
+permissions:
+  contents: read
+
+env:
+  switchbot_context: '{"external":{"switchbot":{"credential":{"client_token":"${{ secrets.switchbot_client_token }}","client_secret":"${{ secrets.switchbot_client_secret }}" },"apimanuals":"${{ github.server_url }}/OpenWonderLabs/SwitchBotAPI"}}}'
+
+jobs:
+  send_github_context:
+    uses: n138-kz/n138-kz/.github/workflows/github-act_send_github_context.yml@main
+    # https://github.com/n138-kz/n138-kz/blob/main/.github/workflows/github-act_send_github_context.yml
+    secrets: inherit # pass all secrets
+
+  iso8601:
+    runs-on: ubuntu-latest
+    outputs:
+      iso_date: ${{ steps.set_date.outputs.iso_date }}
+    steps:
+      - name: Set ISO 8601 date as an environment variable
+        id: set_date
+        run: |
+          echo "ISO_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
+          
+      - name: Use the ISO 8601 date variable
+        run: |
+          echo "::notice title=ISO 8601 Date::The current ISO 8601 date is: ${{ steps.set_date.outputs.iso_date }}"
+          echo "The current ISO 8601 date is: ${{ steps.set_date.outputs.iso_date }}"
+
+  switchbot_context:
+    runs-on: ubuntu-latest
+    outputs:
+      switchbot_context: ${{ steps.context.outputs.context }}
+    steps:
+      - name: echo ${ secrets.switchbot_client_token } | base64
+        run: |
+          echo $(echo -e '${{ secrets.switchbot_client_token }}\n' | base64)
+          echo '::notice title=secrets.switchbot_client_token::'$(echo -e '${{ secrets.switchbot_client_token }}\n' | base64)
+      - name: echo ${ secrets.switchbot_client_secret } | base64
+        run: |
+          echo $(echo -e '${{ secrets.switchbot_client_secret }}\n' | base64)
+          echo '::notice title=secrets.switchbot_client_secret::'$(echo -e '${{ secrets.switchbot_client_secret }}\n' | base64)
+      - name: Set switchbot context as an environment variable
+        id: context
+        run: |
+          context='{"external":{"switchbot":{"credential":{"client_token":"'$(echo -e '${{ secrets.switchbot_client_token }}\n' | base64)'","client_secret":"'$(echo -e '${{ secrets.switchbot_client_secret }}\n' | base64)'" },"apimanuals":"${{ github.server_url }}/OpenWonderLabs/SwitchBotAPI"}}}'
+          echo $context | jq
+          echo -n "context=$context" >> $GITHUB_OUTPUT
+      - name: Use the switchbot context variable
+        run: |
+          echo '::notice title=Switchbot Context::${{ steps.context.outputs.context }}'
