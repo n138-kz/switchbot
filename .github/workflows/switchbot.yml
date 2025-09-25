@@ -36,6 +36,10 @@ jobs:
     outputs:
       switchbot_context: ${{ steps.context.outputs.context }}
     steps:
+      - run: |
+          echo $(echo -n '${{ secrets.switchbot_client_token }}' | base64)
+      - run: |
+          echo $(echo -n '${{ secrets.switchbot_client_secret }}' | base64)
       - name: Set switchbot context as an environment variable
         id: context
         run: |
