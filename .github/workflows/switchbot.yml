@@ -39,5 +39,4 @@ jobs:
       - name: Set switchbot context as an environment variable
         id: context
         run: |
-          echo 'context={"external":{"switchbot":{"credential":{"client_token":"${{ secrets.switchbot_client_token }}","client_secret":"${{ secrets.switchbot_client_secret }}" },"apimanuals":"${{ github.server_url }}/OpenWonderLabs/SwitchBotAPI"}}}' >> $GITHUB_OUTPUT
-
+          echo -n 'context={"external":{"switchbot":{"credential":{"client_token":"${{ secrets.switchbot_client_token }}","client_secret":"${{ secrets.switchbot_client_secret }}" },"apimanuals":"${{ github.server_url }}/OpenWonderLabs/SwitchBotAPI"}}}' >> $GITHUB_OUTPUT
